@@ -1,0 +1,1375 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <title>Therapy Studio - ブログ管理</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&family=Dancing+Script:wght@600&family=Lato:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --pink-light: #fff0f0;
+        --pink-pastel: #fce8e8;
+        --pink-accent: #e89898;
+        --pink-dark: #d48080;
+        --warm-beige: #f5e6d3;
+        --text-dark: #4a3535;
+        --text-mid: #7a5555;
+        --white: #ffffff;
+        --footer-bg: #2b2323;
+        --footer-text: #a89393;
+        --gray-muted: #999999;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Lato", "Helvetica Neue", Arial, sans-serif;
+        background-color: var(--white);
+        color: var(--text-dark);
+        line-height: 1.6;
+      }
+      h1,
+      h2,
+      h3,
+      .serif-font {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+      .brand-logo {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.8rem;
+        color: var(--pink-dark);
+        text-decoration: none;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      header {
+        background-color: rgba(
+          252,
+          232,
+          232,
+          0.85
+        ); /* Hồng pastel kết hợp mờ kính */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(214, 128, 128, 0.15);
+        position: sticky;
+        top: 15px; /* Đẩy xuống một chút tạo khoảng cách bay bổng */
+        z-index: 100;
+        max-width: 1200px;
+        margin: 0 auto;
+        border-radius: 100px; /* Bo tròn dài như một thanh capsule thanh lịch */
+        box-shadow: 0 4px 20px rgba(74, 53, 53, 0.04);
+        /* Thiết lập hiệu ứng chuyển động mượt mà (0.4 giây) */
+        transition:
+          transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+          top 0.4s ease;
+      }
+
+      /* Class này sẽ được JavaScript tự động thêm vào khi người dùng cuộn xuống */
+      header.nav-hidden {
+        transform: translateY(
+          -100px
+        ); /* Đẩy toàn bộ thanh header trượt ngược lên trên màn hình */
+      }
+      .header-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 30px;
+      }
+
+      /* Biến chữ JOURNAL bên phải thành một Badge nhỏ tinh tế */
+      .header-wrapper > span {
+        font-size: 0.75rem !important;
+        letter-spacing: 1.5px;
+        color: var(--pink-dark) !important;
+        background-color: var(--white);
+        padding: 4px 12px;
+        border-radius: 20px;
+        border: 1px solid var(--pink-pastel);
+        font-weight: 700;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background-color: var(--pink-accent);
+        color: var(--white);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 700;
+        transition: all 0.3s;
+        text-decoration: none;
+      }
+      .btn:hover {
+        background-color: var(--pink-dark);
+      }
+      .btn-outline {
+        background-color: transparent;
+        border: 1px solid var(--pink-accent);
+        color: var(--pink-dark);
+      }
+      .btn-outline:hover {
+        background-color: var(--pink-light);
+      }
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 25px;
+        align-items: center;
+      }
+      nav ul li a {
+        text-decoration: none;
+        color: var(--text-mid);
+        font-weight: 700;
+      }
+
+      .page {
+        padding: 40px 0;
+      }
+      .management-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 40px;
+        align-items: start;
+      }
+      .section-title {
+        font-size: 2.2rem;
+        margin-bottom: 25px;
+        border-bottom: 2px solid var(--pink-pastel);
+        padding-bottom: 8px;
+      }
+
+      .form-card {
+        background: var(--white);
+        border: 1px solid var(--pink-pastel);
+        padding: 30px;
+        border-radius: 8px;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-group label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--text-dark);
+      }
+      .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--pink-accent);
+        border-radius: 4px;
+        font-family: "Lato", sans-serif;
+        font-size: 1rem;
+        color: var(--text-dark);
+      }
+
+      .file-upload-wrapper {
+        position: relative;
+        border: 2px dashed var(--pink-accent);
+        background-color: var(--pink-light);
+        padding: 25px;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 6px;
+      }
+      .file-upload-wrapper input[type="file"] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+      }
+      .file-upload-icon {
+        font-size: 2rem;
+        color: var(--pink-dark);
+        margin-bottom: 8px;
+      }
+      .file-upload-text {
+        font-size: 0.95rem;
+        font-weight: 700;
+      }
+      .file-upload-hint {
+        font-size: 0.8rem;
+        color: var(--text-mid);
+        margin-top: 4px;
+      }
+
+      .tag-input-container {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+      .tags-wrapper-box {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 10px;
+        background-color: var(--pink-light);
+        border: 1px dashed var(--pink-accent);
+        border-radius: 4px;
+        min-height: 44px;
+        align-items: center;
+      }
+      .tag-badge {
+        background-color: var(--pink-dark);
+        color: var(--white);
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .tag-badge i {
+        cursor: pointer;
+      }
+      .tags-placeholder {
+        color: var(--text-mid);
+        font-size: 0.85rem;
+        font-style: italic;
+      }
+
+      .html-editor-container {
+        border: 1px solid var(--pink-accent);
+        border-radius: 6px;
+        overflow: hidden;
+        background-color: var(--white);
+      }
+      .html-editor-toolbar {
+        background-color: var(--pink-light);
+        border-bottom: 1px solid var(--pink-pastel);
+        padding: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+      }
+      .toolbar-btn {
+        background: var(--white);
+        border: 1px solid var(--pink-pastel);
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+      }
+      .toolbar-btn:hover {
+        background-color: var(--pink-accent);
+        color: white;
+      }
+      .toolbar-separator {
+        width: 1px;
+        height: 20px;
+        background-color: var(--pink-accent);
+        margin: 0 4px;
+        opacity: 0.5;
+      }
+      .html-editor-body {
+        min-height: 250px;
+        padding: 15px;
+        outline: none;
+        background: #fff;
+      }
+
+      .admin-pane {
+        background-color: var(--warm-beige);
+        padding: 30px;
+        border-radius: 8px;
+      }
+      .catalog-preview-card {
+        background: var(--white);
+        border-radius: 6px;
+        overflow: hidden;
+        border: 1px solid var(--pink-pastel);
+        margin-bottom: 15px;
+      }
+      .catalog-mini-img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+      }
+      .catalog-card-body {
+        padding: 15px;
+      }
+      .catalog-card-body h4 {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+      }
+      .catalog-card-body p {
+        font-size: 0.85rem;
+        color: var(--text-mid);
+      }
+
+      .contact-box {
+        background: white;
+        width: 100%;
+        padding: 60px 20px;
+        border-top: 1px solid var(--pink-pastel);
+      }
+      .contact-grid {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 15px;
+      }
+      .social-links a {
+        color: var(--pink-accent);
+        text-decoration: none;
+        font-size: 1.2rem;
+        border: 1px solid var(--pink-pastel);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+      }
+      footer {
+        background: #2b2323;
+        color: #a89393;
+        padding: 25px;
+        text-align: center;
+        font-size: 0.75rem;
+      }
+      /* --- TABS --- */
+      .tabs-container {
+        margin: 20px;
+        position: relative;
+        margin-bottom: 40px;
+        border-bottom: none; /* Bỏ đường kẻ gạch chân thô cứng cũ */
+        background-color: rgba(
+          255,
+          240,
+          240,
+          0.6
+        ); /* Nền đệm hồng siêu nhạt cho cụm tab */
+        padding: 8px;
+        border-radius: 50px;
+        max-width: fit-content;
+        margin-left: auto;
+        margin-right: auto; /* Căn giữa toàn bộ cụm tab */
+        border: 1px solid rgba(232, 152, 152, 0.2);
+      }
+
+      .tabs-header {
+        display: flex;
+        gap: 10px; /* Thu hẹp khoảng cách để khớp vào khung viên thuốc */
+        justify-content: center;
+      }
+
+      .tab-btn {
+        background: none;
+        border: none;
+        padding: 10px 24px;
+        font-size: 0.95rem;
+        color: var(--text-mid) !important;
+        cursor: pointer;
+        position: relative;
+        font-weight: 500;
+        border-radius: 40px; /* Mỗi nút là một hình oval mềm mại */
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+
+      /* Loại bỏ gạch chân kiểu cũ của tab active */
+      .tab-btn.active::after {
+        display: none;
+      }
+
+      /* Hiệu ứng nổi bật khi Tab được nhấn chọn (Active) */
+      .tab-btn.active {
+        color: var(--white) !important;
+        background-color: var(
+          --pink-accent
+        ) !important; /* Đổi sang nền hồng nhấn */
+        font-weight: 700;
+        box-shadow: 0 4px 12px rgba(232, 152, 152, 0.35); /* Đổ bóng sắc hồng mịn */
+      }
+
+      /* Hiệu ứng mượt mà khi di chuột qua các tab chưa active */
+      .tab-btn:not(.active):hover {
+        color: var(--pink-dark) !important;
+        background-color: rgba(255, 255, 255, 0.8) !important;
+      }
+      .tabs-wrapper {
+        overflow: hidden;
+        width: 100%;
+      }
+      .tabs-track {
+        display: flex;
+        width: 200%;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateX(calc(-50% * var(--active-tab-index)));
+      }
+      .tab-pane {
+        width: 100%;
+        flex-shrink: 0;
+      }
+      /* Logic ẩn/hiện bài viết qua Class bằng JS */
+      .tab-pane .blog-card {
+        display: none;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      /* Trạng thái khi ĐƯỢC HIỆN */
+      .tab-pane .blog-card.is-visible {
+        display: flex; /* Trả lại layout gốc của card */
+        animation: slideUpFadeIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)
+          forwards;
+      }
+
+      /* Định nghĩa hiệu ứng trượt nhẹ từ dưới lên và mờ dần (Fade In) */
+      @keyframes slideUpFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      /* --- BLOG GRID --- */
+      .blogs {
+        border-top: 1px solid var(--pink-pastel);
+      }
+      .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 30px;
+        padding: 15px 0;
+      }
+      .blog-card {
+        background-color: var(--white);
+        border: 1px solid var(--pink-pastel);
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 6px 18px rgba(212, 128, 128, 0.08);
+        transition: transform 0.3s;
+      }
+      .blog-card:hover {
+        transform: translateY(-5px);
+      }
+      .blog-card-img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+      }
+      .blog-card-content {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+      }
+      .blog-card-tags {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+      .tag {
+        background-color: var(--pink-pastel);
+        color: var(--pink-dark);
+        padding: 2px 8px;
+        font-size: 0.8rem;
+        border-radius: 4px;
+        font-weight: 700;
+      }
+      .blog-card-title {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        line-height: 1.4;
+        font-weight: bold;
+      }
+      .blog-card-title a {
+        color: var(--text-dark);
+        text-decoration: none;
+      }
+      .blog-card-title a:hover {
+        color: var(--pink-accent);
+      }
+      .blog-card-desc {
+        color: var(--text-mid);
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+        flex-grow: 1;
+      }
+      .blog-card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 15px;
+        border-top: 1px solid var(--pink-pastel);
+      }
+
+      /* --- BUTTON LOAD MORE --- */
+      .load-more-container {
+        text-align: center;
+        margin: 20px 0 20px 0;
+      }
+      .btn-load-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background-color: var(--pink-accent);
+        color: var(--white);
+        border: 1px solid var(--pink-accent);
+        padding: 12px 40px;
+        border-radius: 50px;
+        font-size: 0.95rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .btn-load-more:hover {
+        background-color: transparent;
+        color: var(--pink-accent);
+        box-shadow: 0 5px 15px rgba(232, 152, 152, 0.2);
+      }
+      .author-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+        color: var(--text-mid);
+      }
+      .author-info i {
+        color: var(--pink-accent);
+      }
+
+      .interaction-box {
+        display: flex;
+        gap: 12px;
+      }
+      .action-btn {
+        background: none;
+        border: none;
+        color: var(--text-mid);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.9rem;
+      }
+      .action-btn.active i {
+        color: #e74c3c;
+      }
+
+      @media (max-width: 992px) {
+        .management-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container header-wrapper">
+        <a
+          href="landing_page.html"
+          class="brand-logo"
+          >Therapy Studio</a
+        >
+        <nav>
+          <ul>
+            <li>
+              <a
+                href="blog_list.html"
+                style="color: var(--pink-dark)"
+                >ブログを探す</a
+              >
+            </li>
+            <li>
+              <a
+                href="blog_create.html"
+                class="btn btn-outline"
+                ><i class="fa-solid fa-pen-nib"></i> 記事を書く</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="page">
+        <div class="management-grid">
+          <div>
+            <h2 class="section-title" style="color: var(--pink-dark)">
+              新しいブログ記事を作成
+            </h2>
+            <div class="form-card">
+              <form onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                  <label for="post-title">記事タイトル</label>
+                  <input
+                    type="text"
+                    id="post-title"
+                    class="form-control"
+                    value="五感を呼び覚ますアロマとハーブティーの療法"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label>カバー画像ファイル</label>
+                  <div class="file-upload-wrapper">
+                    <i class="fa-solid fa-cloud-arrow-up file-upload-icon"></i>
+                    <div class="file-upload-text">
+                      ここに画像をドラッグ＆ドロップ、またはクリックして選択
+                    </div>
+                    <div class="file-upload-hint">
+                      対応形式: JPG, PNG, WEBP (最大 5MB)
+                    </div>
+                    <input type="file" id="post-image-file" accept="image/*" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>記事タグ</label>
+                  <div class="tag-input-container">
+                    <input
+                      type="text"
+                      id="tag-field-input"
+                      class="form-control"
+                      placeholder="カスタムタグを入力 (例: ハーブティー, リラックス)"
+                    />
+                    <button type="button" class="btn" onclick="addNewUserTag()">
+                      タグを追加
+                    </button>
+                  </div>
+                  <div id="tags-rendered-box" class="tags-wrapper-box">
+                    <span class="tag-badge"
+                      >ハーブティー
+                      <i
+                        class="fa-solid fa-xmark"
+                        onclick="removeUserTag(this)"
+                      ></i
+                    ></span>
+                    <span class="tag-badge"
+                      >アロマテラピー
+                      <i
+                        class="fa-solid fa-xmark"
+                        onclick="removeUserTag(this)"
+                      ></i
+                    ></span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>記事本文 (リッチテキストエディタ)</label>
+                  <div class="html-editor-container">
+                    <div class="html-editor-toolbar">
+                      <button type="button" class="toolbar-btn" title="太字">
+                        <b>B</b>
+                      </button>
+                      <button type="button" class="toolbar-btn" title="斜体">
+                        <i>I</i>
+                      </button>
+                      <button type="button" class="toolbar-btn" title="下線">
+                        <u>U</u>
+                      </button>
+                      <div class="toolbar-separator"></div>
+                      <button type="button" class="toolbar-btn" title="左揃え">
+                        <i class="fa-solid fa-align-left"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="toolbar-btn"
+                        title="中央揃え"
+                      >
+                        <i class="fa-solid fa-align-center"></i>
+                      </button>
+                      <button type="button" class="toolbar-btn" title="右揃え">
+                        <i class="fa-solid fa-align-right"></i>
+                      </button>
+                      <div class="toolbar-separator"></div>
+                      <button
+                        type="button"
+                        class="toolbar-btn"
+                        title="箇条書き"
+                      >
+                        <i class="fa-solid fa-list-ul"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="toolbar-btn"
+                        title="番号付き箇条書き"
+                      >
+                        <i class="fa-solid fa-list-ol"></i>
+                      </button>
+                      <div class="toolbar-separator"></div>
+                      <button
+                        type="button"
+                        class="toolbar-btn"
+                        title="画像挿入"
+                      >
+                        <i class="fa-solid fa-image"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="toolbar-btn"
+                        title="リンク挿入"
+                      >
+                        <i class="fa-solid fa-link"></i>
+                      </button>
+                      <div class="toolbar-separator"></div>
+                      <button
+                        type="button"
+                        class="toolbar-btn"
+                        style="width: auto; padding: 0 8px; font-size: 0.75rem"
+                        title="HTMLソース表示"
+                      >
+                        <i class="fa-solid fa-code"></i> HTML
+                      </button>
+                    </div>
+                    <div class="html-editor-body" contenteditable="true">
+                      <p>
+                        読者の皆様、こんにちは...
+                        心を癒やす素敵なコンテンツをここに自由に記述してください。
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display: flex; gap: 15px">
+                  <button
+                    type="submit"
+                    class="btn"
+                    style="flex: 1; justify-content: center"
+                  >
+                    <i class="fa-solid fa-cloud-arrow-up"></i> 記事を公開する
+                  </button>
+                  <a
+                    href="blog_list.html"
+                    class="btn btn-outline"
+                    >キャンセル</a
+                  >
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="admin-pane">
+            <h3
+              class="serif-font"
+              style="font-size: 1.5rem; margin-bottom: 5px"
+            >
+              スタジオカタログ
+            </h3>
+            <p
+              style="
+                color: var(--text-mid);
+                font-size: 0.9rem;
+                margin-bottom: 20px;
+              "
+            >
+              管理者アカウント: <strong>タン・ニャ</strong>
+            </p>
+
+            <div id="posts-list-container">
+              <div class="catalog-preview-card">
+                <img
+                  src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_2.jpg"
+                  class="catalog-mini-img"
+                  alt="お茶のプレビュー"
+                />
+                <div class="catalog-card-body">
+                  <h4>五感を呼び覚ますアロマとハーブ...</h4>
+                  <p>更新: 2時間前 | 下書き保存中</p>
+                  <div
+                    style="
+                      margin-top: 10px;
+                      display: flex;
+                      justify-content: flex-end;
+                    "
+                  >
+                    <a
+                      href="blog_detail.html"
+                      class="btn"
+                      style="
+                        padding: 6px 12px;
+                        font-size: 0.8rem;
+                        border-radius: 3px;
+                      "
+                      >プレビュー</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="container blogs">
+      <div class="tabs-container">
+        <div class="tabs-header">
+          <button class="tab-btn active" onclick="switchTab(event, 0)">
+            最新の投稿
+          </button>
+          <button class="tab-btn" onclick="switchTab(event, 1)">
+            リラクゼーション空間
+          </button>
+        </div>
+      </div>
+
+      <div class="tabs-wrapper">
+        <div class="tab-pane">
+          <div class="blog-grid">
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/room_1.jpg"
+                class="blog-card-img"
+                alt="温かみのある瞑想ルーム"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">マインドフルネス</span>
+                  <span class="tag">瞑想</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="blog_detail.html"
+                    >朝5分間の瞑想で本来の自分を取り戻す方法</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  静かな空間で自分の呼吸と深くつながることから朝を始めることで、前向きなエネルギーを引き寄せるベースが整います...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> タン・ニャ
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>24</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_1.jpg"
+                class="blog-card-img"
+                alt="洗練されたインテリア"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">インテリア</span>
+                  <span class="tag">ライフスタイル</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="blog_detail.html"
+                    >ストレスを軽減する心地よい空間づくりのアート</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  淡い色調と素朴な風合いのアイテムを組み合わせることで、忙しい毎日の終わりに神経を優しく解きほぐすヒーリング効果が生まれます...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> ミン・チー
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>42</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_2.jpg"
+                class="blog-card-img"
+                alt="お茶とハーブ"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">ハーブティー</span>
+                  <span class="tag">アロマテラピー</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="blog_detail.html"
+                    >五感を呼び覚ますアロマとハーブティーの療法</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  ほのかに香るエッセンシャルオイルとともに温かいお茶をいただく時間は、繊細な心に究極の安らぎをもたらします...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> タン・ニャ
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>19</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/room_1.jpg"
+                class="blog-card-img"
+                alt="温かみのある瞑想ルーム"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">マインドフルネス</span>
+                  <span class="tag">瞑想</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="blog_detail.html"
+                    >朝5分間の瞑想で本来の自分を取り戻す方法</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  静かな空間で自分の呼吸と深くつながることから朝を始めることで、前向きなエネルギーを引き寄せるベースが整います...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> タン・ニャ
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>24</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_1.jpg"
+                class="blog-card-img"
+                alt="洗練されたインテリア"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">インテリア</span>
+                  <span class="tag">ライフスタイル</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="blog_detail.html"
+                    >ストレスを軽減する心地よい空間づくりのアート</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  淡い色調と素朴な風合いのアイテムを組み合わせることで、忙しい毎日の終わりに神経を優しく解きほぐすヒーリング効果が生まれます...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> ミン・チー
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>42</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_2.jpg"
+                class="blog-card-img"
+                alt="お茶とハーブ"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">ハーブティー</span>
+                  <span class="tag">アロマテラピー</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="blog_detail.html"
+                    >五感を呼び覚ますアロマとハーブティーの療法</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  ほのかに香るエッセンシャルオイルとともに温かいお茶をいただく時間は、繊細な心に究極の安らぎをもたらします...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> タン・ニャ
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>19</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/room_1.jpg"
+                class="blog-card-img"
+                alt="温かみのある瞑想ルーム"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">マインドフルネス</span>
+                  <span class="tag">瞑想</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="blog_detail.html"
+                    >朝5分間の瞑想で本来の自分を取り戻す方法</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  静かな空間で自分の呼吸と深くつながることから朝を始めることで、前向きなエネルギーを引き寄せるベースが整います...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> タン・ニャ
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>24</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_1.jpg"
+                class="blog-card-img"
+                alt="洗練されたインテリア"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">インテリア</span>
+                  <span class="tag">ライフスタイル</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="blog_detail.html"
+                    >ストレスを軽減する心地よい空間づくりのアート</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  淡い色調と素朴な風合いのアイテムを組み合わせることで、忙しい毎日の終わりに神経を優しく解きほぐすヒーリング効果が生まれます...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> ミン・チー
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>42</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_2.jpg"
+                class="blog-card-img"
+                alt="お茶とハーブ"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">ハーブティー</span>
+                  <span class="tag">アロマテラピー</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="blog_detail.html"
+                    >五感を呼び覚ますアロマとハーブティーの療法</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  ほのかに香るエッセンシャルオイルとともに温かいお茶をいただく時間は、繊細な心に究極の安らぎをもたらします...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> タン・ニャ
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>19</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="load-more-container">
+        <button
+          id="loadMoreBtn"
+          class="btn-load-more"
+          onclick="loadMoreArticles()"
+        >
+          <span>もっと見る</span> <i class="fa-solid fa-chevron-down"></i>
+        </button>
+      </div>
+    </div>
+    <div id="contact" class="contact-box">
+      <div class="contact-grid">
+        <div>
+          <h3 style="color: var(--pink-accent); margin-bottom: 15px">
+            お問い合わせ情報
+          </h3>
+          <p style="font-size: 0.9rem; margin-bottom: 8px">
+            <strong>住所:</strong> 大阪府 堺筋本町 & 南堀江
+          </p>
+          <p style="font-size: 0.9rem; margin-bottom: 8px">
+            <strong>メール:</strong> info@therapystudio.jp
+          </p>
+          <p style="font-size: 0.9rem; margin-bottom: 8px">
+            <strong>LINE:</strong> @therapystudio
+          </p>
+          <p style="font-size: 0.9rem">
+            <strong>電話番号:</strong> 090-0000-0000
+          </p>
+        </div>
+        <div style="text-align: right">
+          <h3 style="color: var(--pink-accent); margin-bottom: 15px">
+            公式SNS
+          </h3>
+          <div class="social-links" style="justify-content: flex-end">
+            <a href="#" title="X">𝕏</a>
+            <a href="#" title="Instagram">📷</a>
+          </div>
+          <p style="font-size: 0.75rem; margin-top: 15px; color: #999">
+            営業時間: 月 〜 土, 9:00~18:00
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 Therapy Studio. All rights reserved.</p>
+    </footer>
+
+    <script>
+      function addNewUserTag() {
+        const tagInput = document.getElementById("tag-field-input");
+        const tagsBox = document.getElementById("tags-rendered-box");
+        const cleanedText = tagInput.value.trim();
+
+        if (cleanedText === "") return;
+
+        const placeholder = tagsBox.querySelector(".tags-placeholder");
+        if (placeholder) placeholder.remove();
+
+        const badgeSpan = document.createElement("span");
+        badgeSpan.className = "tag-badge";
+        badgeSpan.innerHTML = `${cleanedText} <i class="fa-solid fa-xmark" onclick="removeUserTag(this)"></i>`;
+
+        tagsBox.appendChild(badgeSpan);
+        tagInput.value = "";
+        tagInput.focus();
+      }
+
+      function removeUserTag(closeIconElement) {
+        const tagBadge = closeIconElement.closest(".tag-badge");
+        const tagsBox = document.getElementById("tags-rendered-box");
+
+        if (tagBadge) {
+          tagBadge.remove();
+        }
+
+        if (tagsBox.children.length === 0) {
+          tagsBox.innerHTML =
+            '<span class="tags-placeholder">追加されたタグはありません。</span>';
+        }
+      }
+
+      function handleFormSubmit(event) {
+        event.preventDefault();
+        alert("成功！ 記事の詳細が正常に保存されました。");
+        document.querySelector("form").reset();
+        document.getElementById("tags-rendered-box").innerHTML =
+          '<span class="tags-placeholder">追加されたタグはありません。</span>';
+        document.querySelector(".html-editor-body").innerHTML = "<p><br></p>";
+      }
+
+      // --- BLOG ---
+      const ITEMS_PER_PAGE = 3;
+      let currentActiveTabIndex = 0;
+      let tabVisibleCounts = ITEMS_PER_PAGE;
+
+      function renderPagination() {
+        const cards = document.querySelectorAll(".tab-pane .blog-card");
+        let matchedCount = 0;
+
+        cards.forEach((card) => {
+          matchedCount++;
+
+          if (matchedCount <= tabVisibleCounts) {
+            // Thêm class để kích hoạt hiệu ứng hiển thị trượt lên và mờ dần
+            card.classList.add("is-visible");
+          } else {
+            // Xóa class để kích hoạt hiệu ứng thu nhỏ và biến mất mượt mà
+            card.classList.remove("is-visible");
+          }
+        });
+
+        // Điều khiển ẩn/hiện nút "Xem thêm" (もっと見る)
+        const loadMoreBtn = document.getElementById("loadMoreBtn");
+        if (cards.length > tabVisibleCounts) {
+          loadMoreBtn.style.display = "inline-flex";
+        } else {
+          loadMoreBtn.style.display = "none";
+        }
+      }
+
+      // Xử lý khi người dùng nhấn nút "Xem thêm" (もっと見る)
+      function loadMoreArticles() {
+        // Tăng số lượng hiển thị thêm 6 bài
+        tabVisibleCounts += ITEMS_PER_PAGE;
+        // Cập nhật lại giao diện hiển thị
+        renderPagination();
+      }
+
+      // Xử lý chuyển đổi Tab và RESET trạng thái lúc mới load
+      function switchTab(event, tabIndex) {
+        currentActiveTabIndex = tabIndex;
+
+        // 1. Lấy tất cả các bài viết đang hiển thị trên màn hình
+        const cards = document.querySelectorAll(".tab-pane .blog-card");
+
+        // 2. BIẾN MẤT: Đồng loạt xóa class 'is-visible' để kích hoạt transition ẩn đi
+        cards.forEach((card) => {
+          card.classList.remove("is-visible");
+        });
+
+        // Cập nhật class active cho nút bấm UI ngay lập tức
+        const tabButtons = document.querySelectorAll(".tab-btn");
+        tabButtons.forEach((btn) => btn.classList.remove("active"));
+        event.currentTarget.classList.add("active");
+
+        // 3. XUẤT HIỆN LẠI: Chờ 300ms cho hiệu ứng ẩn chạy xong rồi mới kích hoạt hiện lại
+        setTimeout(() => {
+          // RESET lại số lượng hiển thị về 6 bài ban đầu
+          tabVisibleCounts = ITEMS_PER_PAGE;
+          renderPagination();
+        }, 100); // 300ms là thời gian chờ lý tưởng để tạo nhịp nghỉ cho mắt
+      }
+
+      // Tự động kích hoạt khi trang load xong
+      document.addEventListener("DOMContentLoaded", function () {
+        renderPagination();
+      });
+      function toggleLike(button) {
+        button.classList.toggle("active");
+        const icon = button.querySelector("i");
+        const countSpan = button.querySelector("span");
+        let currentCount = parseInt(countSpan.innerText);
+
+        if (button.classList.contains("active")) {
+          icon.className = "fa-solid fa-heart";
+          countSpan.innerText = currentCount + 1;
+        } else {
+          icon.className = "fa-regular fa-heart";
+          countSpan.innerText = currentCount - 1;
+        }
+      }
+
+      function shareAlert() {
+        alert("記事のリンクがクリップボードにコピーされました！");
+      }
+      // --- LOGIC ẨN/HIỆN HEADER KHI CUỘN TRANG ---
+      let lastScrollY = window.scrollY; // Lưu lại vị trí cuộn chuột trước đó
+
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector("header");
+        const currentScrollY = window.scrollY;
+
+        // Nếu cuộn xuống và cuộn qua khoảng cách 50px (tránh nhạy quá khi chớm cuộn)
+        if (currentScrollY > lastScrollY && currentScrollY > 50) {
+          header.classList.add("nav-hidden"); // Ẩn thanh điều hướng
+        } else {
+          header.classList.remove("nav-hidden"); // Xuất hiện lại thanh điều hướng
+        }
+
+        // Cập nhật lại vị trí cuộn hiện tại cho lần cuộn tiếp theo
+        lastScrollY = currentScrollY;
+      });
+    </script>
+  </body>
+</html>
