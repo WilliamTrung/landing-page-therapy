@@ -18,17 +18,17 @@
 
     <style>
       :root {
-        --pink-light: #fff0f0;
-        --pink-pastel: #fce8e8;
-        --pink-accent: #e89898;
-        --pink-dark: #d48080;
-        --warm-beige: #f5e6d3;
-        --text-dark: #4a3535;
-        --text-mid: #7a5555;
-        --white: #ffffff;
-        --footer-bg: #2b2323;
-        --footer-text: #a89393;
-        --gray-muted: #999999;
+        --pink-light: #fff7f0;
+        --pink-pastel: #f3dfd2;
+        --pink-accent: #c98a68;
+        --pink-dark: #9f634b;
+        --warm-beige: #ead6c2;
+        --text-dark: #3f2f29;
+        --text-mid: #7a5d52;
+        --white: #fffdf9;
+        --footer-bg: #2a211d;
+        --footer-text: #b9a092;
+        --gray-muted: #9c8b82;
       }
 
       * {
@@ -65,21 +65,21 @@
 
       header {
         background-color: rgba(
-          252,
-          232,
-          232,
-          0.85
-        ); /* Hồng pastel kết hợp mờ kính */
+          234,
+          214,
+          194,
+          0.92
+        ); /* Warm beige glass surface */
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(214, 128, 128, 0.15);
+        border-bottom: 1px solid rgba(201, 138, 104, 0.28);
         position: sticky;
         top: 15px; /* Đẩy xuống một chút tạo khoảng cách bay bổng */
         z-index: 100;
         max-width: 1200px;
         margin: 0 auto;
         border-radius: 100px; /* Bo tròn dài như một thanh capsule thanh lịch */
-        box-shadow: 0 4px 20px rgba(74, 53, 53, 0.04);
+        box-shadow: 0 6px 24px rgba(63, 47, 41, 0.1);
         /* Thiết lập hiệu ứng chuyển động mượt mà (0.4 giây) */
         transition:
           transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
@@ -145,6 +145,14 @@
         text-decoration: none;
         color: var(--text-mid);
         font-weight: 700;
+      }
+      nav ul li a.btn-outline {
+        border-radius: 999px;
+      }
+      nav ul li a.btn-outline:hover {
+        background-color: var(--pink-accent);
+        border-color: var(--pink-accent);
+        color: var(--pink-pastel);
       }
 
       .page {
@@ -362,8 +370,8 @@
         border-radius: 50%;
       }
       footer {
-        background: #2b2323;
-        color: #a89393;
+        background: var(--footer-bg);
+        color: var(--footer-text);
         padding: 25px;
         text-align: center;
         font-size: 0.75rem;
@@ -414,7 +422,7 @@
 
       /* Hiệu ứng nổi bật khi Tab được nhấn chọn (Active) */
       .tab-btn.active {
-        color: var(--white) !important;
+        color: var(--pink-pastel) !important;
         background-color: var(
           --pink-accent
         ) !important; /* Đổi sang nền hồng nhấn */
@@ -428,7 +436,7 @@
         background-color: rgba(255, 255, 255, 0.8) !important;
       }
       .tabs-wrapper {
-        overflow: hidden;
+        overflow: visible;
         width: 100%;
       }
       .tabs-track {
@@ -440,12 +448,13 @@
       .tab-pane {
         width: 100%;
         flex-shrink: 0;
+        overflow: visible;
       }
       /* Logic ẩn/hiện bài viết qua Class bằng JS */
       .tab-pane .blog-card {
         display: none;
         opacity: 0;
-        transform: translateY(20px);
+        transform: scale(1);
       }
 
       /* Trạng thái khi ĐƯỢC HIỆN */
@@ -459,11 +468,9 @@
       @keyframes slideUpFadeIn {
         from {
           opacity: 0;
-          transform: translateY(20px);
         }
         to {
           opacity: 1;
-          transform: translateY(0);
         }
       }
       /* --- BLOG GRID --- */
@@ -475,6 +482,7 @@
         grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
         gap: 30px;
         padding: 15px 0;
+        overflow: visible;
       }
       .blog-card {
         background-color: var(--white);
@@ -484,10 +492,13 @@
         display: flex;
         flex-direction: column;
         box-shadow: 0 6px 18px rgba(212, 128, 128, 0.08);
-        transition: transform 0.3s;
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.3s ease;
       }
       .blog-card:hover {
-        transform: translateY(-5px);
+        transform: scale(1.025);
+        z-index: 2;
       }
       .blog-card-img {
         width: 100%;
@@ -1214,7 +1225,13 @@
             <a href="#" title="X">𝕏</a>
             <a href="#" title="Instagram">📷</a>
           </div>
-          <p style="font-size: 0.75rem; margin-top: 15px; color: #999">
+          <p
+            style="
+              font-size: 0.75rem;
+              margin-top: 15px;
+              color: var(--gray-muted);
+            "
+          >
             営業時間: 月 〜 土, 9:00~18:00
           </p>
         </div>
@@ -1334,6 +1351,7 @@
       // Tự động kích hoạt khi trang load xong
       document.addEventListener("DOMContentLoaded", function () {
         renderPagination();
+        setupBlogCardLinks();
       });
       function toggleLike(button) {
         button.classList.toggle("active");
@@ -1352,6 +1370,18 @@
 
       function shareAlert() {
         alert("記事のリンクがクリップボードにコピーされました！");
+      }
+      function setupBlogCardLinks() {
+        document.querySelectorAll(".blog-card").forEach((card) => {
+          card.addEventListener("click", (event) => {
+            if (event.target.closest("a, button")) return;
+
+            const link = card.querySelector("a[href]");
+            if (link) {
+              window.location.href = link.href;
+            }
+          });
+        });
       }
       // --- LOGIC ẨN/HIỆN HEADER KHI CUỘN TRANG ---
       let lastScrollY = window.scrollY; // Lưu lại vị trí cuộn chuột trước đó

@@ -18,16 +18,17 @@
 
     <style>
       :root {
-        --pink-light: #fff0f0;
-        --pink-pastel: #fce8e8;
-        --pink-accent: #e89898;
-        --pink-dark: #d48080;
-        --warm-beige: #f5e6d3;
-        --text-dark: #4a3535;
-        --text-mid: #7a5555;
-        --white: #ffffff;
-        --footer-bg: #2b2323;
-        --footer-text: #a89393;
+        --pink-light: #fff7f0;
+        --pink-pastel: #f3dfd2;
+        --pink-accent: #c98a68;
+        --pink-dark: #9f634b;
+        --warm-beige: #ead6c2;
+        --text-dark: #3f2f29;
+        --text-mid: #7a5d52;
+        --white: #fffdf9;
+        --footer-bg: #2a211d;
+        --footer-text: #b9a092;
+        --gray-muted: #9c8b82;
       }
 
       * {
@@ -62,21 +63,21 @@
 
       header {
         background-color: rgba(
-          252,
-          232,
-          232,
-          0.85
-        ); /* Hồng pastel kết hợp mờ kính */
+          234,
+          214,
+          194,
+          0.92
+        ); /* Warm beige glass surface */
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(214, 128, 128, 0.15);
+        border-bottom: 1px solid rgba(201, 138, 104, 0.28);
         position: sticky;
         top: 15px; /* Đẩy xuống một chút tạo khoảng cách bay bổng */
         z-index: 100;
         max-width: 1200px;
         margin: 0 auto;
         border-radius: 100px; /* Bo tròn dài như một thanh capsule thanh lịch */
-        box-shadow: 0 4px 20px rgba(74, 53, 53, 0.04);
+        box-shadow: 0 6px 24px rgba(63, 47, 41, 0.1);
         /* Thiết lập hiệu ứng chuyển động mượt mà (0.4 giây) */
         transition:
           transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
@@ -212,8 +213,8 @@
         border-radius: 50%;
       }
       footer {
-        background: #2b2323;
-        color: #a89393;
+        background: var(--footer-bg);
+        color: var(--footer-text);
         padding: 25px;
         text-align: center;
         font-size: 0.75rem;
@@ -359,7 +360,13 @@
             <a href="#" title="X">𝕏</a>
             <a href="#" title="Instagram">📷</a>
           </div>
-          <p style="font-size: 0.75rem; margin-top: 15px; color: #999">
+          <p
+            style="
+              font-size: 0.75rem;
+              margin-top: 15px;
+              color: var(--gray-muted);
+            "
+          >
             営業時間: 月 〜 土, 9:00~18:00
           </p>
         </div>
