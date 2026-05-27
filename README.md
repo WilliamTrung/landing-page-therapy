@@ -1,6 +1,6 @@
-# Therapy Studio Landing Page
+# セラピースタジオ Landing Page
 
-Static HTML website for Therapy Studio, a Japanese landing page and blog prototype for a women-focused therapy and salon training service.
+Static HTML website for セラピースタジオ, a Japanese landing page and blog prototype for a women-focused therapy and salon training service.
 
 ## Pages
 
