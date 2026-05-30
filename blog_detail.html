@@ -108,6 +108,34 @@
         border: 1px solid var(--pink-pastel);
         font-weight: 700;
       }
+      @media (max-width: 640px) {
+        header {
+          top: 8px;
+          width: calc(100% - 16px);
+          border-radius: 999px;
+        }
+
+        .header-wrapper {
+          flex-wrap: nowrap;
+          gap: 8px;
+          padding: 8px 10px;
+        }
+
+        .brand-logo {
+          flex: 1 1 auto;
+          min-width: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: clamp(1rem, 4vw, 1.5rem);
+        }
+
+        .header-wrapper > a:not(.brand-logo) {
+          flex: 0 0 auto;
+          white-space: nowrap;
+          font-size: 0.85rem;
+        }
+      }
       /* --- ARTICLE HEADER --- */
       .article-header {
         padding: 40px 0 20px 0;
