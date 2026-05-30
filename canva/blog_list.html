@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <title>セラピースタジオ - ブログ一覧</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&family=Dancing+Script:wght@600&family=Lato:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --pink-light: #fff7f0;
+        --pink-pastel: #f3dfd2;
+        --pink-accent: #c98a68;
+        --pink-dark: #9f634b;
+        --warm-beige: #ead6c2;
+        --text-dark: #3f2f29;
+        --text-mid: #7a5d52;
+        --white: #fffdf9;
+        --footer-bg: #2a211d;
+        --footer-text: #b9a092;
+        --gray-muted: #9c8b82;
+        --active-tab-index: 0;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Lato", "Helvetica Neue", Arial, sans-serif;
+        background-color: var(--white); /* Thay vì var(--white) */
+        color: var(--text-dark);
+        line-height: 1.6;
+      }
+
+      h1,
+      h2,
+      h3,
+      .serif-font {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 700;
+      }
+      .brand-logo {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.8rem;
+        color: var(--pink-dark);
+        text-decoration: none;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background-color: var(--pink-accent);
+        color: var(--white);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 700;
+        text-decoration: none;
+        transition: background 0.3s;
+      }
+      .btn:hover {
+        background-color: var(--pink-dark);
+      }
+      .btn-outline {
+        background-color: transparent;
+        border: 1px solid var(--pink-accent);
+        color: var(--pink-dark);
+      }
+      .btn-outline:hover {
+        background-color: var(--pink-light);
+      }
+      header {
+        background-color: rgba(
+          234,
+          214,
+          194,
+          0.92
+        ); /* Warm beige glass surface */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(201, 138, 104, 0.28);
+        position: sticky;
+        top: 15px; /* Đẩy xuống một chút tạo khoảng cách bay bổng */
+        z-index: 100;
+        max-width: 1200px;
+        margin: 0 auto;
+        border-radius: 100px; /* Bo tròn dài như một thanh capsule thanh lịch */
+        box-shadow: 0 6px 24px rgba(63, 47, 41, 0.1);
+        /* Thiết lập hiệu ứng chuyển động mượt mà (0.4 giây) */
+        transition:
+          transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+          top 0.4s ease;
+      }
+
+      /* Class này sẽ được JavaScript tự động thêm vào khi người dùng cuộn xuống */
+      header.nav-hidden {
+        transform: translateY(
+          -100px
+        ); /* Đẩy toàn bộ thanh header trượt ngược lên trên màn hình */
+      }
+      .header-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 30px;
+      }
+
+      /* Biến chữ JOURNAL bên phải thành một Badge nhỏ tinh tế */
+      .header-wrapper > span {
+        font-size: 0.75rem !important;
+        letter-spacing: 1.5px;
+        color: var(--pink-dark) !important;
+        background-color: var(--white);
+        padding: 4px 12px;
+        border-radius: 20px;
+        border: 1px solid var(--pink-pastel);
+        font-weight: 700;
+      }
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 25px;
+        align-items: center;
+      }
+      nav ul li a {
+        text-decoration: none;
+        color: var(--text-mid);
+        font-weight: 700;
+      }
+      nav ul li a.btn-outline {
+        border-radius: 999px;
+      }
+      nav ul li a.btn-outline:hover {
+        background-color: var(--pink-accent);
+        border-color: var(--pink-accent);
+        color: var(--pink-pastel);
+      }
+
+      @media (max-width: 640px) {
+        header {
+          top: 8px;
+          width: calc(100% - 16px);
+          border-radius: 999px;
+        }
+
+        .header-wrapper {
+          flex-direction: row;
+          flex-wrap: nowrap;
+          gap: 6px;
+          padding: 8px 10px;
+        }
+
+        .brand-logo {
+          flex: 1 1 auto;
+          min-width: 0;
+          overflow: hidden;
+          text-align: left;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: clamp(1rem, 4vw, 1.5rem);
+        }
+
+        .header-wrapper > span {
+          flex: 0 0 auto;
+          padding: 3px 7px;
+          font-size: 0.58rem !important;
+          letter-spacing: 0.5px;
+        }
+
+        nav {
+          flex: 0 0 auto;
+          width: auto;
+        }
+
+        nav ul {
+          justify-content: flex-end;
+          flex-wrap: nowrap;
+          gap: 6px;
+        }
+
+        nav ul li a {
+          white-space: nowrap;
+          font-size: 0.78rem;
+        }
+
+        nav ul li a.btn-outline {
+          padding: 6px 8px;
+        }
+
+        nav ul li a.btn-outline i {
+          display: none;
+        }
+      }
+
+      /* --- TABS --- */
+      .tabs-container {
+        margin: 60px;
+        position: relative;
+        margin-bottom: 40px;
+        border-bottom: none; /* Bỏ đường kẻ gạch chân thô cứng cũ */
+        background-color: rgba(
+          255,
+          240,
+          240,
+          0.6
+        ); /* Nền đệm hồng siêu nhạt cho cụm tab */
+        padding: 8px;
+        border-radius: 50px;
+        max-width: fit-content;
+        margin-left: auto;
+        margin-right: auto; /* Căn giữa toàn bộ cụm tab */
+        border: 1px solid rgba(232, 152, 152, 0.2);
+      }
+
+      .tabs-header {
+        display: flex;
+        gap: 10px; /* Thu hẹp khoảng cách để khớp vào khung viên thuốc */
+        justify-content: center;
+      }
+
+      .tab-btn {
+        background: none;
+        border: none;
+        padding: 10px 24px;
+        font-size: 0.95rem;
+        color: var(--text-mid) !important;
+        cursor: pointer;
+        position: relative;
+        font-weight: 500;
+        border-radius: 40px; /* Mỗi nút là một hình oval mềm mại */
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+
+      /* Loại bỏ gạch chân kiểu cũ của tab active */
+      .tab-btn.active::after {
+        display: none;
+      }
+
+      /* Hiệu ứng nổi bật khi Tab được nhấn chọn (Active) */
+      .tab-btn.active {
+        color: var(--pink-pastel) !important;
+        background-color: var(
+          --pink-accent
+        ) !important; /* Đổi sang nền hồng nhấn */
+        font-weight: 700;
+        box-shadow: 0 4px 12px rgba(232, 152, 152, 0.35); /* Đổ bóng sắc hồng mịn */
+      }
+
+      /* Hiệu ứng mượt mà khi di chuột qua các tab chưa active */
+      .tab-btn:not(.active):hover {
+        color: var(--pink-dark) !important;
+        background-color: rgba(255, 255, 255, 0.8) !important;
+      }
+      .tabs-wrapper {
+        overflow: visible;
+        width: 100%;
+      }
+      .tabs-track {
+        display: flex;
+        width: 200%;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateX(calc(-50% * var(--active-tab-index)));
+      }
+      .tab-pane {
+        width: 100%;
+        flex-shrink: 0;
+        overflow: visible;
+      }
+      /* Logic ẩn/hiện bài viết qua Class bằng JS */
+      .tab-pane .blog-card {
+        display: none;
+        opacity: 0;
+        transform: scale(1);
+      }
+
+      /* Trạng thái khi ĐƯỢC HIỆN */
+      .tab-pane .blog-card.is-visible {
+        display: flex; /* Trả lại layout gốc của card */
+        animation: slideUpFadeIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)
+          forwards;
+      }
+
+      /* Định nghĩa hiệu ứng trượt nhẹ từ dưới lên và mờ dần (Fade In) */
+      @keyframes slideUpFadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      /* --- BLOG GRID --- */
+      .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 30px;
+        padding: 15px 0;
+        overflow: visible;
+      }
+      .blog-card {
+        background-color: var(--white);
+        border: 1px solid var(--pink-pastel);
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 6px 18px rgba(212, 128, 128, 0.08);
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+      .blog-card:hover {
+        transform: scale(1.025);
+        z-index: 2;
+      }
+      .blog-card-img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+      }
+      .blog-card-content {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+      }
+      .blog-card-tags {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+      .tag {
+        background-color: var(--pink-pastel);
+        color: var(--pink-dark);
+        padding: 2px 8px;
+        font-size: 0.8rem;
+        border-radius: 4px;
+        font-weight: 700;
+      }
+      .blog-card-title {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        line-height: 1.4;
+        font-weight: bold;
+      }
+      .blog-card-title a {
+        color: var(--text-dark);
+        text-decoration: none;
+      }
+      .blog-card-title a:hover {
+        color: var(--pink-accent);
+      }
+      .blog-card-desc {
+        color: var(--text-mid);
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+        flex-grow: 1;
+      }
+      .blog-card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 15px;
+        border-top: 1px solid var(--pink-pastel);
+      }
+
+      /* --- BUTTON LOAD MORE --- */
+      .load-more-container {
+        text-align: center;
+        margin: 20px 0 20px 0;
+      }
+      .btn-load-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background-color: var(--pink-accent);
+        color: var(--white);
+        border: 1px solid var(--pink-accent);
+        padding: 12px 40px;
+        border-radius: 50px;
+        font-size: 0.95rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .btn-load-more:hover {
+        background-color: transparent;
+        color: var(--pink-accent);
+        box-shadow: 0 5px 15px rgba(232, 152, 152, 0.2);
+      }
+      .author-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+        color: var(--text-mid);
+      }
+      .author-info i {
+        color: var(--pink-accent);
+      }
+
+      .interaction-box {
+        display: flex;
+        gap: 12px;
+      }
+      .action-btn {
+        background: none;
+        border: none;
+        color: var(--text-mid);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.9rem;
+      }
+      .action-btn.active i {
+        color: #e74c3c;
+      }
+
+      .contact-box {
+        background: white;
+        width: 100%;
+        padding: 60px 20px;
+        border-top: 1px solid var(--pink-pastel);
+        margin-top: 60px;
+      }
+      .contact-grid {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 15px;
+      }
+      .social-links a {
+        color: var(--pink-accent);
+        text-decoration: none;
+        font-size: 1.2rem;
+        border: 1px solid var(--pink-pastel);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+      }
+      footer {
+        background: var(--footer-bg);
+        color: var(--footer-text);
+        padding: 25px;
+        text-align: center;
+        font-size: 0.75rem;
+      }
+
+      @media (max-width: 768px) {
+        .hero-banner h1 {
+          font-size: 2.2rem;
+        }
+        .contact-grid {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .social-links {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container header-wrapper">
+        <a
+          href="https://canva.link/landing-page-v1"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="brand-logo"
+          >セラピースタジオ</a
+        >
+        <nav>
+          <ul>
+            <li>
+              <a
+                href="https://canva.link/blog-list-v1"
+                target="_blank"
+                rel="noopener noreferrer"
+                style="color: var(--pink-dark)"
+                >ブログを探す</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://canva.link/blog-create-v1"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-outline"
+                ><i class="fa-solid fa-pen-nib"></i> 記事を書く</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="tabs-container">
+        <div class="tabs-header">
+          <button class="tab-btn active" onclick="switchTab(event, 0)">
+            最新の投稿
+          </button>
+          <button class="tab-btn" onclick="switchTab(event, 1)">
+            リラクゼーション空間
+          </button>
+        </div>
+      </div>
+
+      <div class="tabs-wrapper">
+        <div class="tab-pane">
+          <div class="blog-grid">
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/room_1.jpg"
+                class="blog-card-img"
+                alt="温かみのある瞑想ルーム"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">マインドフルネス</span>
+                  <span class="tag">瞑想</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="https://canva.link/blog-detail-v1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >朝5分間の瞑想で本来の自分を取り戻す方法</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  静かな空間で自分の呼吸と深くつながることから朝を始めることで、前向きなエネルギーを引き寄せるベースが整います...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> タン・ニャ
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>24</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_1.jpg"
+                class="blog-card-img"
+                alt="洗練されたインテリア"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">インテリア</span>
+                  <span class="tag">ライフスタイル</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="https://canva.link/blog-detail-v1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >ストレスを軽減する心地よい空間づくりのアート</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  淡い色調と素朴な風合いのアイテムを組み合わせることで、忙しい毎日の終わりに神経を優しく解きほぐすヒーリング効果が生まれます...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> ミン・チー
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>42</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_2.jpg"
+                class="blog-card-img"
+                alt="お茶とハーブ"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">ハーブティー</span>
+                  <span class="tag">アロマテラピー</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="https://canva.link/blog-detail-v1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >五感を呼び覚ますアロマとハーブティーの療法</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  ほのかに香るエッセンシャルオイルとともに温かいお茶をいただく時間は、繊細な心に究極の安らぎをもたらします...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> タン・ニャ
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>19</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/room_1.jpg"
+                class="blog-card-img"
+                alt="温かみのある瞑想ルーム"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">マインドフルネス</span>
+                  <span class="tag">瞑想</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="https://canva.link/blog-detail-v1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >朝5分間の瞑想で本来の自分を取り戻す方法</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  静かな空間で自分の呼吸と深くつながることから朝を始めることで、前向きなエネルギーを引き寄せるベースが整います...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> タン・ニャ
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>24</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_1.jpg"
+                class="blog-card-img"
+                alt="洗練されたインテリア"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">インテリア</span>
+                  <span class="tag">ライフスタイル</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="https://canva.link/blog-detail-v1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >ストレスを軽減する心地よい空間づくりのアート</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  淡い色調と素朴な風合いのアイテムを組み合わせることで、忙しい毎日の終わりに神経を優しく解きほぐすヒーリング効果が生まれます...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> ミン・チー
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>42</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_2.jpg"
+                class="blog-card-img"
+                alt="お茶とハーブ"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">ハーブティー</span>
+                  <span class="tag">アロマテラピー</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="https://canva.link/blog-detail-v1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >五感を呼び覚ますアロマとハーブティーの療法</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  ほのかに香るエッセンシャルオイルとともに温かいお茶をいただく時間は、繊細な心に究極の安らぎをもたらします...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> タン・ニャ
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>19</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/room_1.jpg"
+                class="blog-card-img"
+                alt="温かみのある瞑想ルーム"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">マインドフルネス</span>
+                  <span class="tag">瞑想</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="https://canva.link/blog-detail-v1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >朝5分間の瞑想で本来の自分を取り戻す方法</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  静かな空間で自分の呼吸と深くつながることから朝を始めることで、前向きなエネルギーを引き寄せるベースが整います...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> タン・ニャ
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>24</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_1.jpg"
+                class="blog-card-img"
+                alt="洗練されたインテリア"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">インテリア</span>
+                  <span class="tag">ライフスタイル</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="https://canva.link/blog-detail-v1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >ストレスを軽減する心地よい空間づくりのアート</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  淡い色調と素朴な風合いのアイテムを組み合わせることで、忙しい毎日の終わりに神経を優しく解きほぐすヒーリング効果が生まれます...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> ミン・チー
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>42</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="blog-card">
+              <img
+                src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_2.jpg"
+                class="blog-card-img"
+                alt="お茶とハーブ"
+              />
+              <div class="blog-card-content">
+                <div class="blog-card-tags">
+                  <span class="tag">ハーブティー</span>
+                  <span class="tag">アロマテラピー</span>
+                </div>
+                <h3 class="blog-card-title">
+                  <a
+                    href="https://canva.link/blog-detail-v1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >五感を呼び覚ますアロマとハーブティーの療法</a
+                  >
+                </h3>
+                <p class="blog-card-desc">
+                  ほのかに香るエッセンシャルオイルとともに温かいお茶をいただく時間は、繊細な心に究極の安らぎをもたらします...
+                </p>
+                <div class="blog-card-footer">
+                  <div class="author-info">
+                    <i class="fa-solid fa-feather-pointed"></i> タン・ニャ
+                  </div>
+                  <div class="interaction-box">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                      <i class="fa-regular fa-heart"></i> <span>19</span>
+                    </button>
+                    <button class="action-btn" onclick="shareAlert()">
+                      <i class="fa-regular fa-share-from-square"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="load-more-container">
+        <button
+          id="loadMoreBtn"
+          class="btn-load-more"
+          onclick="loadMoreArticles()"
+        >
+          <span>もっと見る</span> <i class="fa-solid fa-chevron-down"></i>
+        </button>
+      </div>
+    </main>
+
+    <div id="contact" class="contact-box">
+      <div class="contact-grid">
+        <div>
+          <h3 style="color: var(--pink-accent); margin-bottom: 15px">
+            お問い合わせ情報
+          </h3>
+          <p style="font-size: 0.9rem; margin-bottom: 8px">
+            <strong>住所:</strong> 大阪府 堺筋本町 & 南堀江
+          </p>
+          <p style="font-size: 0.9rem; margin-bottom: 8px">
+            <strong>メール:</strong> info@therapystudio.jp
+          </p>
+          <p style="font-size: 0.9rem; margin-bottom: 8px">
+            <strong>LINE:</strong> @therapystudio
+          </p>
+          <p style="font-size: 0.9rem">
+            <strong>電話番号:</strong> 090-0000-0000
+          </p>
+        </div>
+        <div style="text-align: right">
+          <h3 style="color: var(--pink-accent); margin-bottom: 15px">
+            公式SNS
+          </h3>
+          <div class="social-links" style="justify-content: flex-end">
+            <a href="#" title="X">𝕏</a>
+            <a href="#" title="Instagram">📷</a>
+          </div>
+          <p
+            style="
+              font-size: 0.75rem;
+              margin-top: 15px;
+              color: var(--gray-muted);
+            "
+          >
+            営業時間: 月 〜 土, 9:00~18:00
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 セラピースタジオ. All rights reserved.</p>
+    </footer>
+
+    <script>
+      const ITEMS_PER_PAGE = 6;
+      let currentActiveTabIndex = 0;
+      let tabVisibleCounts = ITEMS_PER_PAGE;
+
+      function renderPagination() {
+        const cards = document.querySelectorAll(".tab-pane .blog-card");
+        let matchedCount = 0;
+
+        cards.forEach((card) => {
+          matchedCount++;
+
+          if (matchedCount <= tabVisibleCounts) {
+            // Thêm class để kích hoạt hiệu ứng hiển thị trượt lên và mờ dần
+            card.classList.add("is-visible");
+          } else {
+            // Xóa class để kích hoạt hiệu ứng thu nhỏ và biến mất mượt mà
+            card.classList.remove("is-visible");
+          }
+        });
+
+        // Điều khiển ẩn/hiện nút "Xem thêm" (もっと見る)
+        const loadMoreBtn = document.getElementById("loadMoreBtn");
+        if (cards.length > tabVisibleCounts) {
+          loadMoreBtn.style.display = "inline-flex";
+        } else {
+          loadMoreBtn.style.display = "none";
+        }
+      }
+
+      // Xử lý khi người dùng nhấn nút "Xem thêm" (もっと見る)
+      function loadMoreArticles() {
+        // Tăng số lượng hiển thị thêm 6 bài
+        tabVisibleCounts += ITEMS_PER_PAGE;
+        // Cập nhật lại giao diện hiển thị
+        renderPagination();
+      }
+
+      // Xử lý chuyển đổi Tab và RESET trạng thái lúc mới load
+      function switchTab(event, tabIndex) {
+        currentActiveTabIndex = tabIndex;
+
+        // 1. Lấy tất cả các bài viết đang hiển thị trên màn hình
+        const cards = document.querySelectorAll(".tab-pane .blog-card");
+
+        // 2. BIẾN MẤT: Đồng loạt xóa class 'is-visible' để kích hoạt transition ẩn đi
+        cards.forEach((card) => {
+          card.classList.remove("is-visible");
+        });
+
+        // Cập nhật class active cho nút bấm UI ngay lập tức
+        const tabButtons = document.querySelectorAll(".tab-btn");
+        tabButtons.forEach((btn) => btn.classList.remove("active"));
+        event.currentTarget.classList.add("active");
+
+        // 3. XUẤT HIỆN LẠI: Chờ 300ms cho hiệu ứng ẩn chạy xong rồi mới kích hoạt hiện lại
+        setTimeout(() => {
+          // RESET lại số lượng hiển thị về 6 bài ban đầu
+          tabVisibleCounts = ITEMS_PER_PAGE;
+          renderPagination();
+        }, 100); // 300ms là thời gian chờ lý tưởng để tạo nhịp nghỉ cho mắt
+      }
+
+      // Tự động kích hoạt khi trang load xong
+      document.addEventListener("DOMContentLoaded", function () {
+        renderPagination();
+        setupBlogCardLinks();
+      });
+      function toggleLike(button) {
+        button.classList.toggle("active");
+        const icon = button.querySelector("i");
+        const countSpan = button.querySelector("span");
+        let currentCount = parseInt(countSpan.innerText);
+
+        if (button.classList.contains("active")) {
+          icon.className = "fa-solid fa-heart";
+          countSpan.innerText = currentCount + 1;
+        } else {
+          icon.className = "fa-regular fa-heart";
+          countSpan.innerText = currentCount - 1;
+        }
+      }
+
+      function shareAlert() {
+        alert("記事のリンクがクリップボードにコピーされました！");
+      }
+      function setupBlogCardLinks() {
+        document.querySelectorAll(".blog-card").forEach((card) => {
+          card.addEventListener("click", (event) => {
+            if (event.target.closest("a, button")) return;
+
+            const link = card.querySelector("a[href]");
+            if (link) {
+              window.open(link.href, "_blank", "noopener,noreferrer");
+            }
+          });
+        });
+      }
+      // --- LOGIC ẨN/HIỆN HEADER KHI CUỘN TRANG ---
+      let lastScrollY = window.scrollY; // Lưu lại vị trí cuộn chuột trước đó
+
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector("header");
+        const currentScrollY = window.scrollY;
+
+        // Nếu cuộn xuống và cuộn qua khoảng cách 50px (tránh nhạy quá khi chớm cuộn)
+        if (currentScrollY > lastScrollY && currentScrollY > 50) {
+          header.classList.add("nav-hidden"); // Ẩn thanh điều hướng
+        } else {
+          header.classList.remove("nav-hidden"); // Xuất hiện lại thanh điều hướng
+        }
+
+        // Cập nhật lại vị trí cuộn hiện tại cho lần cuộn tiếp theo
+        lastScrollY = currentScrollY;
+      });
+    </script>
+  </body>
+</html>

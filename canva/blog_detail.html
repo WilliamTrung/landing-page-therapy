@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <title>セラピースタジオ - 記事詳細</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&family=Dancing+Script:wght@600&family=Lato:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --pink-light: #fff7f0;
+        --pink-pastel: #f3dfd2;
+        --pink-accent: #c98a68;
+        --pink-dark: #9f634b;
+        --warm-beige: #ead6c2;
+        --text-dark: #3f2f29;
+        --text-mid: #7a5d52;
+        --white: #fffdf9;
+        --footer-bg: #2a211d;
+        --footer-text: #b9a092;
+        --gray-muted: #9c8b82;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Lato", "Helvetica Neue", Arial, sans-serif;
+        background-color: var(--white);
+        color: var(--text-dark);
+        line-height: 1.8;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Cormorant Garamond", serif;
+        color: var(--text-dark);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      .brand-logo {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.8rem;
+        color: var(--pink-dark);
+        text-decoration: none;
+      }
+
+      header {
+        background-color: rgba(
+          234,
+          214,
+          194,
+          0.92
+        ); /* Warm beige glass surface */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(201, 138, 104, 0.28);
+        position: sticky;
+        top: 15px; /* Đẩy xuống một chút tạo khoảng cách bay bổng */
+        z-index: 100;
+        max-width: 1200px;
+        margin: 0 auto;
+        border-radius: 100px; /* Bo tròn dài như một thanh capsule thanh lịch */
+        box-shadow: 0 6px 24px rgba(63, 47, 41, 0.1);
+        /* Thiết lập hiệu ứng chuyển động mượt mà (0.4 giây) */
+        transition:
+          transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+          top 0.4s ease;
+      }
+
+      /* Class này sẽ được JavaScript tự động thêm vào khi người dùng cuộn xuống */
+      header.nav-hidden {
+        transform: translateY(
+          -100px
+        ); /* Đẩy toàn bộ thanh header trượt ngược lên trên màn hình */
+      }
+      .header-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 30px;
+      }
+
+      /* Biến chữ JOURNAL bên phải thành một Badge nhỏ tinh tế */
+      .header-wrapper > span {
+        font-size: 0.75rem !important;
+        letter-spacing: 1.5px;
+        color: var(--pink-dark) !important;
+        background-color: var(--white);
+        padding: 4px 12px;
+        border-radius: 20px;
+        border: 1px solid var(--pink-pastel);
+        font-weight: 700;
+      }
+      @media (max-width: 640px) {
+        header {
+          top: 8px;
+          width: calc(100% - 16px);
+          border-radius: 999px;
+        }
+
+        .header-wrapper {
+          flex-wrap: nowrap;
+          gap: 8px;
+          padding: 8px 10px;
+        }
+
+        .brand-logo {
+          flex: 1 1 auto;
+          min-width: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: clamp(1rem, 4vw, 1.5rem);
+        }
+
+        .header-wrapper > a:not(.brand-logo) {
+          flex: 0 0 auto;
+          white-space: nowrap;
+          font-size: 0.85rem;
+        }
+      }
+      /* --- ARTICLE HEADER --- */
+      .article-header {
+        padding: 40px 0 20px 0;
+        text-align: center;
+      }
+      .article-title {
+        font-size: 2.4rem;
+        line-height: 1.3;
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+      .article-meta {
+        color: var(--text-mid);
+        font-size: 0.9rem;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .main-cover-img {
+        width: 100%;
+        max-height: 480px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 35px;
+        box-shadow: 0 8px 20px rgba(74, 53, 53, 0.06);
+      }
+
+      /* --- RICH CONTENT --- */
+      .article-body {
+        font-size: 1.05rem;
+        color: var(--text-dark);
+      }
+      .article-body p {
+        margin-bottom: 20px;
+        text-align: justify;
+      }
+      .article-body h2 {
+        font-size: 1.6rem;
+        margin: 35px 0 15px 0;
+        color: var(--pink-dark);
+        font-weight: bold;
+      }
+
+      .inline-image-box {
+        margin: 30px 0;
+        text-align: center;
+      }
+      .inline-img {
+        max-width: 100%;
+        height: auto;
+        max-height: 500px;
+        border-radius: 6px;
+      }
+      .img-caption {
+        font-size: 0.85rem;
+        color: var(--text-mid);
+        font-style: italic;
+        margin-top: 8px;
+      }
+
+      blockquote {
+        border-left: 4px solid var(--pink-accent);
+        padding-left: 20px;
+        margin: 30px 0;
+        font-size: 1.15rem;
+        font-style: italic;
+        color: var(--text-mid);
+        background-color: var(--pink-light);
+        padding: 15px 20px;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .contact-box {
+        background: white;
+        width: 100%;
+        padding: 60px 20px;
+        border-top: 1px solid var(--pink-pastel);
+        margin-top: 60px;
+      }
+      .contact-grid {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 15px;
+      }
+      .social-links a {
+        color: var(--pink-accent);
+        text-decoration: none;
+        font-size: 1.2rem;
+        border: 1px solid var(--pink-pastel);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+      }
+      footer {
+        background: var(--footer-bg);
+        color: var(--footer-text);
+        padding: 25px;
+        text-align: center;
+        font-size: 0.75rem;
+      }
+      /* --- CSS CHO NÚT EDIT CẠNH TIÊU ĐỀ --- */
+      .article-title {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px; /* Khoảng cách giữa chữ tiêu đề và nút */
+        flex-wrap: wrap; /* Tự động xuống dòng nút nếu tiêu đề quá dài trên mobile */
+      }
+
+      .btn-edit-title {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-family: "Lato", "Helvetica Neue", Arial, sans-serif;
+        font-size: 0.95rem; /* Thu nhỏ kích thước chữ của nút */
+        font-weight: normal;
+        color: var(--pink-dark);
+        text-decoration: none;
+        background-color: var(--pink-light);
+        border: 1px solid var(--pink-accent);
+        padding: 4px 12px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .btn-edit-title:hover {
+        background-color: var(--pink-accent);
+        color: var(--white);
+        transform: translateY(-1px);
+      }
+
+      .btn-edit-title i {
+        font-size: 0.85rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container header-wrapper">
+        <a
+          href="https://canva.link/landing-page-v1"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="brand-logo"
+          >セラピースタジオ</a
+        >
+        <a
+          href="https://canva.link/blog-list-v1"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            text-decoration: none;
+            color: var(--pink-dark);
+            font-weight: 700;
+          "
+          ><i class="fa-solid fa-arrow-left"></i> 戻る</a
+        >
+      </div>
+    </header>
+
+    <main class="container">
+      <article class="article-header">
+        <h1 class="article-title">
+          朝5分間の瞑想で本来の自分を取り戻す方法
+          <a
+            href="https://canva.link/blog-create-v1"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-edit-title"
+            title="編集する"
+          >
+            <i class="fa-regular fa-pen-to-square"></i> 編集
+          </a>
+        </h1>
+        <div class="article-meta">
+          <span><i class="fa-regular fa-calendar"></i> 2026/05/23</span>
+          <span><i class="fa-regular fa-user"></i> タン・ニャ</span>
+          <span
+            ><i class="fa-regular fa-folder"></i> 瞑想・マインドフルネス</span
+          >
+        </div>
+      </article>
+
+      <img
+        src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/room_1.jpg"
+        class="main-cover-img"
+        alt="静かな瞑想空間"
+      />
+
+      <section class="article-body">
+        <p>
+          慌ただしい現代社会において、仕事のプレッシャーやデジタルデバイスからの絶え間ない通知に追われ、私たちはつい自分自身とのつながりを見失いがちです。スケジュールが始まる前のほんの5分間、朝の静寂の中で過ごす時間は、心に深く染み渡る最高の処方箋となります。
+        </p>
+
+        <blockquote>
+          「本当の平穏とは、周囲に雑音がない静かな場所のことではなく、どんな嵐の真ん中にいても、心が軽やかで穏やかでいられる状態をいいます。」
+        </blockquote>
+
+        <h2>心を癒やすミニマルな空間づくり</h2>
+        <p>
+          自然光が優しく差し込む清潔で小さなスペースを作ることは、副交感神経の働きを活発にし、精神的な安心感と心地よさを自然にもたらしてくれます。
+        </p>
+
+        <div class="inline-image-box">
+          <img
+            src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_1.jpg"
+            class="inline-img"
+            alt="素朴なインテリアディテール"
+          />
+          <div class="img-caption">
+            写真：当スタジオの、心を深くリラックスさせるための素朴で美しい装飾ディテール。
+          </div>
+        </div>
+
+        <p>
+          まずは楽な姿勢で足を組んで座り、そっと目を閉じましょう。そして、鼻を通り抜ける呼吸の出入りにすべての意識を集中させます。湧き上がる思考を遮るのではなく、まるで空に浮かぶ雲を眺めるように、ただ自然に受け流していくことがポイントです。
+        </p>
+      </section>
+    </main>
+
+    <div id="contact" class="contact-box">
+      <div class="contact-grid">
+        <div>
+          <h3 style="margin-bottom: 15px; color: var(--pink-accent)">
+            お問い合わせ情報
+          </h3>
+          <p style="font-size: 0.9rem; margin-bottom: 8px">
+            <strong>住所:</strong> 大阪府 堺筋本町 & 南堀江
+          </p>
+          <p style="font-size: 0.9rem; margin-bottom: 8px">
+            <strong>メール:</strong> info@therapystudio.jp
+          </p>
+          <p style="font-size: 0.9rem; margin-bottom: 8px">
+            <strong>LINE:</strong> @therapystudio
+          </p>
+          <p style="font-size: 0.9rem">
+            <strong>電話番号:</strong> 090-0000-0000
+          </p>
+        </div>
+        <div style="text-align: right">
+          <h3 style="margin-bottom: 15px; color: var(--pink-accent)">
+            公式SNS
+          </h3>
+          <div class="social-links" style="justify-content: flex-end">
+            <a href="#" title="X">𝕏</a>
+            <a href="#" title="Instagram">📷</a>
+          </div>
+          <p
+            style="
+              font-size: 0.75rem;
+              margin-top: 15px;
+              color: var(--gray-muted);
+            "
+          >
+            営業時間: 月 〜 土, 9:00~18:00
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 セラピースタジオ. All rights reserved.</p>
+    </footer>
+    <script>
+      // --- LOGIC ẨN/HIỆN HEADER KHI CUỘN TRANG ---
+      let lastScrollY = window.scrollY; // Lưu lại vị trí cuộn chuột trước đó
+
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector("header");
+        const currentScrollY = window.scrollY;
+
+        // Nếu cuộn xuống và cuộn qua khoảng cách 50px (tránh nhạy quá khi chớm cuộn)
+        if (currentScrollY > lastScrollY && currentScrollY > 50) {
+          header.classList.add("nav-hidden"); // Ẩn thanh điều hướng
+        } else {
+          header.classList.remove("nav-hidden"); // Xuất hiện lại thanh điều hướng
+        }
+
+        // Cập nhật lại vị trí cuộn hiện tại cho lần cuộn tiếp theo
+        lastScrollY = currentScrollY;
+      });
+
+      function clearCanvaImportantStyles() {
+        // Lấy tất cả phần tử có thuộc tính 'style' nội dòng trên trang
+        const allElements = document.querySelectorAll("[style]");
+
+        allElements.forEach((el) => {
+          let styleString = el.getAttribute("style");
+
+          // Nếu phát hiện có chữ !important trong chuỗi style inline
+          if (styleString && styleString.includes("!important")) {
+            // Dùng Regex xóa tất cả các chữ !important (không phân biệt hoa thường)
+            let cleanStyle = styleString.replace(/!important/gi, "");
+
+            // Cập nhật lại thuộc tính style sạch cho phần tử
+            el.setAttribute("style", cleanStyle);
+          }
+        });
+      }
+
+      // Chạy ngay khi cây DOM được dựng xong để tránh hiện tượng giật màu (FOUC)
+      document.addEventListener("DOMContentLoaded", function () {
+        clearCanvaImportantStyles();
+
+        // Gọi lại hàm phân trang hiển thị blog cũ của bạn (nếu có)
+        if (typeof renderPagination === "function") {
+          renderPagination();
+        }
+      });
+    </script>
+  </body>
+</html>

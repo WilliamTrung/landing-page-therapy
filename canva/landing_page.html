@@ -1,0 +1,1337 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>セラピーススタジオ | 女性セラピストのためのプロ養成講座</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Serif+JP:wght@300;500;700&family=Lato:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      .edge-blur-top {
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          transparent 0%,
+          black 20%,
+          black 100%
+        );
+        mask-image: linear-gradient(
+          to bottom,
+          transparent 0%,
+          black 20%,
+          black 100%
+        );
+      }
+      .edge-blur-bottom {
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          black 0%,
+          black 80%,
+          transparent 100%
+        );
+        mask-image: linear-gradient(
+          to bottom,
+          black 0%,
+          black 80%,
+          transparent 100%
+        );
+      }
+      .edge-blur {
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          transparent 0%,
+          black 10%,
+          black 90%,
+          transparent 100%
+        );
+        mask-image: linear-gradient(
+          to bottom,
+          transparent 0%,
+          black 10%,
+          black 90%,
+          transparent 100%
+        );
+      }
+      section {
+        padding: 80px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        opacity: 0;
+        transform: translateY(50px);
+        transition:
+          opacity 1.5s cubic-bezier(0.215, 0.61, 0.355, 1),
+          transform 1.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          transparent 0%,
+          black 10%,
+          black 90%,
+          transparent 100%
+        );
+        mask-image: linear-gradient(
+          to bottom,
+          transparent 0%,
+          black 10%,
+          black 90%,
+          transparent 100%
+        );
+      }
+      #hero {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+      }
+      section.scroll-reveal-active {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+      }
+      .rotate-me {
+        transform: rotate(45deg);
+      }
+      .rotate-back {
+        transform: rotate(-90deg);
+      }
+      :root {
+        --pink-light: #fff7f0;
+        --pink-pastel: #f3dfd2;
+        --pink-accent: #c98a68;
+        --pink-dark: #9f634b;
+        --warm-beige: #ead6c2;
+        --text-dark: #3f2f29;
+        --text-mid: #7a5d52;
+        --white: #fffdf9;
+        --footer-bg: #2a211d;
+        --footer-text: #b9a092;
+        --gray-muted: #9c8b82;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Lato", "Noto Serif JP", serif;
+        color: var(--text-dark);
+        background: var(--white);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      .container {
+        max-width: 1100px;
+        width: 100%;
+        text-align: center;
+      }
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        padding: 1.2rem;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(5px);
+        border-bottom: 1px solid var(--pink-pastel);
+        flex-wrap: wrap;
+        transition: top 0.3s ease-in-out;
+      }
+      .nav-hidden {
+        top: -100px;
+      }
+      nav a {
+        font-family: "Cormorant Garamond", "Noto Serif JP", serif;
+        font-size: 0.85rem;
+        color: var(--text-mid);
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: bold;
+      }
+      .script-title {
+        font-family: "Noto Serif JP", serif;
+        font-weight: 500;
+        font-size: clamp(2rem, 6vw, 3rem);
+        color: var(--pink-accent);
+        margin-bottom: 1rem;
+        letter-spacing: 0.05em;
+      }
+      .hero-subtitle {
+        font-size: 1.2rem;
+        font-style: italic;
+        margin-bottom: 10px;
+      }
+      .hero-description {
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto 30px;
+        font-size: 0.95rem;
+      }
+      .section-eyebrow {
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        margin-bottom: 40px;
+      }
+      .section-eyebrow--rooms {
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+        margin-bottom: 20px;
+      }
+      .section-eyebrow--plans {
+        letter-spacing: 2px;
+        margin-bottom: 30px;
+      }
+      .btn-pill {
+        display: inline-block;
+        padding: 0.8rem 2.5rem;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: 0.3s;
+        cursor: pointer;
+        border: none;
+        font-size: 0.9rem;
+        text-align: center;
+      }
+      .btn-pink {
+        background: var(--pink-accent);
+        color: var(--white);
+      }
+      .fab-contact {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background-color: var(--pink-accent);
+        color: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 4px 15px rgba(232, 152, 152, 0.4);
+        z-index: 1001;
+        text-decoration: none;
+        transition:
+          transform 0.3s,
+          background-color 0.3s;
+      }
+      .fab-contact:hover {
+        transform: scale(1.1);
+        background-color: var(--pink-dark);
+      }
+      .fab-contact::after {
+        content: "お問い合わせ";
+        position: absolute;
+        right: 70px;
+        background: var(--text-dark);
+        color: var(--white);
+        padding: 5px 12px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.3s;
+      }
+      .fab-contact:hover::after {
+        opacity: 1;
+      }
+      #hero {
+        height: 100vh;
+        background:
+          linear-gradient(rgba(232, 152, 152, 0.2), rgba(0, 0, 0, 0.4)),
+          url("https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/landing_image_1.jpg")
+            center/cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--white);
+        padding: 20px;
+      }
+      #hero .script-title {
+        color: var(--white);
+        font-size: clamp(2.5rem, 8vw, 4rem);
+      }
+      #pain-points {
+        background-color: var(--pink-pastel);
+      }
+      .pain-list {
+        max-width: 700px;
+        margin: 0 auto;
+        list-style: none;
+      }
+      .pain-list li {
+        font-size: 0.95rem;
+        color: var(--text-mid);
+        margin-bottom: 12px;
+        font-style: italic;
+      }
+      .icon-group-c {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 50px;
+        flex-wrap: wrap;
+      }
+      .icon-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        transition: 0.5s ease;
+      }
+      .icon-item:hover {
+        transform: scale(1.02);
+      }
+      .icon-circle-c {
+        width: 60px;
+        height: 60px;
+        background: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        box-shadow: 0 4px 10px rgba(232, 152, 152, 0.1);
+      }
+      .icon-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: bold;
+        color: var(--pink-dark);
+      }
+      #rooms {
+        padding: 80px 0;
+        background-color: var(--white);
+      }
+      #rooms .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      .walkthrough {
+        width: 100%;
+        margin: 0 auto;
+        background: transparent;
+        box-shadow: none;
+        overflow: visible;
+      }
+      .walkthrough-body {
+        display: flex;
+        flex-direction: column;
+        gap: 60px;
+        height: auto;
+      }
+      .screen {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: flex !important;
+        flex-direction: row;
+        width: 100%;
+        height: 450px;
+        background: var(--pink-pastel);
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(232, 152, 152, 0.1);
+        margin-bottom: 5%;
+      }
+      .screen:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+      .screen-image {
+        flex: 1;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+      }
+      .screen-image--dry-care {
+        background-image: url("https://thaiodyssey.co.in/assets/img/blog/thai-dry-massage-the-secret-to-ultimate-relaxation.webp");
+      }
+      .screen-image--oil-massage {
+        background-image: url("https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?q=80&w=800");
+      }
+      .screen-image--art-touch {
+        background-image: url("https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=800");
+      }
+      .screen-image--hospitality {
+        background-image: url("https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=800");
+      }
+      .screen-content {
+        flex: 1;
+        padding: 40px 10%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: left;
+        background: var(--pink-light);
+        box-sizing: border-box;
+      }
+      .screen-content h3 {
+        font-family: "Noto Serif JP", serif;
+        font-size: 1.8rem;
+        color: var(--pink-dark);
+        margin-bottom: 15px;
+      }
+      .screen-content p {
+        font-size: 1rem;
+        color: var(--text-mid);
+        line-height: 1.6;
+      }
+      #blog {
+        padding: 80px 0;
+        background-color: var(--white);
+      }
+      #blog .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      .blog-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 10px;
+        margin-top: 40px;
+        background: transparent;
+        border-radius: 20px;
+        overflow: visible;
+      }
+      .blog-tag {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background-color: var(--pink-accent);
+        color: var(--white);
+        padding: 6px 12px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 4px;
+        z-index: 2;
+      }
+      .blog-card.featured {
+        grid-column: 1 / 2;
+        grid-row: 1 / 3;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .blog-card {
+        background: var(--white);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        box-shadow: 0 20px 50px rgba(232, 152, 152, 0.35);
+        border-radius: 5px;
+      }
+      .blog-card:hover {
+        transform: scale(1.025);
+        z-index: 2;
+      }
+      .blog-image {
+        width: 100%;
+        height: 20vh;
+        background-size: cover;
+        background-position: center;
+      }
+      .blog-image--mindfulness {
+        background-image: url("https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/hero_1.jpg");
+      }
+      .blog-image--interior {
+        background-image: url("https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_1.jpg");
+      }
+      .blog-image--herbal-tea {
+        background-image: url("https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/decor_2.jpg");
+      }
+      .blog-content {
+        padding: 25px;
+        padding-bottom: 60px;
+      }
+      .blog-content h3 {
+        font-family: "Noto Serif JP", serif;
+        font-size: 1.4rem;
+        color: var(--pink-dark);
+        margin-bottom: 10px;
+        line-height: 1.3;
+      }
+      .blog-content p {
+        font-size: 0.95rem;
+        color: var(--text-mid);
+        line-height: 1.5;
+      }
+      .view-detail {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-family: "Noto Serif JP", serif;
+        font-size: 0.9rem;
+        color: var(--pink-accent);
+        text-decoration: none;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+      }
+      .view-detail:hover {
+        color: var(--pink-dark);
+        transform: translateX(3px);
+      }
+      .view-detail i {
+        margin-left: 5px;
+        font-size: 0.8rem;
+      }
+      @media (min-width: 993px) {
+        .blog-card.featured .blog-image {
+          flex: 1;
+          height: auto;
+        }
+      }
+      @media (max-width: 992px) {
+        .blog-container {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto;
+          gap: 30px;
+        }
+        .blog-card {
+          flex-direction: column !important;
+          height: auto;
+          border-radius: 16px !important;
+        }
+        .blog-image {
+          width: 100% !important;
+          height: 250px !important;
+          border-radius: 16px 16px 0 0 !important;
+        }
+        .blog-card:hover {
+          transform: scale(1.025);
+        }
+      }
+      .blog-footer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 25px;
+        padding-bottom: 40px;
+      }
+      .view-more-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 40px;
+        background-color: var(--pink-accent);
+        color: var(--white);
+        text-decoration: none;
+        border-radius: 50px;
+        font-family: "Lato", sans-serif;
+        font-size: 0.9rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        border: 1px solid var(--pink-accent);
+      }
+      .view-more-pill i {
+        font-size: 0.8rem;
+        transition: transform 0.3s ease;
+      }
+      .view-more-pill:hover {
+        background-color: transparent;
+        color: var(--pink-accent);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(232, 152, 152, 0.3);
+      }
+      .view-more-pill:hover i {
+        transform: rotate(90deg);
+      }
+      @media (max-width: 900px) {
+        .blog-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 600px) {
+        .blog-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      #plans {
+        background-color: var(--pink-light);
+      }
+      .calendar-card {
+        background: var(--white);
+        border: 1px solid var(--pink-pastel);
+        border-radius: 24px;
+        padding: clamp(20px, 5vw, 40px);
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 30px;
+        box-shadow: 0 10px 30px rgba(232, 152, 152, 0.1);
+        text-align: left;
+        width: 100%;
+      }
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+      }
+      .day {
+        aspect-ratio: 1;
+        border: 1px solid #fef5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        border-radius: 4px;
+      }
+      .day.has-class {
+        background: var(--pink-pastel);
+        color: var(--pink-dark);
+        font-weight: bold;
+        border: 1px solid var(--pink-accent);
+      }
+      .day.selected {
+        background: var(--pink-accent);
+        color: var(--white);
+      }
+      .details-box {
+        border-left: 1px solid #eee;
+        padding-left: 20px;
+      }
+      .details-title,
+      .amenity-section-title,
+      .contact-title {
+        font-family: "Noto Serif JP", serif;
+        color: var(--pink-accent);
+        margin-bottom: 15px;
+      }
+      .details-title {
+        font-size: 1.4rem;
+      }
+      .class-info-label {
+        font-size: 0.8rem;
+        color: var(--pink-dark);
+      }
+      .class-info-time {
+        font-size: 0.9rem;
+      }
+      .btn-full {
+        width: 100%;
+      }
+      .btn-with-top-margin {
+        margin-top: 15px;
+      }
+      #amenity {
+        background-color: var(--white);
+      }
+      .amenity-box {
+        background: var(--pink-light);
+        border: 2px solid var(--pink-pastel);
+        border-radius: 24px;
+        padding: clamp(20px, 5vw, 50px);
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: left;
+        box-shadow: 0 10px 25px rgba(232, 152, 152, 0.05);
+      }
+      .room-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+      .room-info-card {
+        background: var(--white);
+        padding: 20px;
+        border-radius: 15px;
+        border-left: 4px solid var(--pink-accent);
+      }
+      .room-card-title {
+        font-family: "Noto Serif JP", serif;
+        color: var(--pink-dark);
+        margin-bottom: 5px;
+      }
+      .room-card-meta {
+        font-size: 0.85rem;
+        color: var(--text-mid);
+      }
+      .amenity-feature-group {
+        margin-bottom: 30px;
+      }
+      .amenity-section-title {
+        font-size: 1.3rem;
+      }
+      .feature-list {
+        list-style: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .feature-list li {
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .feature-check {
+        color: var(--pink-accent);
+      }
+      .amenity-cta {
+        text-align: center;
+        border-top: 1px dashed var(--pink-accent);
+        padding-top: 30px;
+      }
+      .amenity-note {
+        font-size: 0.9rem;
+        color: var(--text-mid);
+        margin-bottom: 20px;
+        font-style: italic;
+      }
+      .btn-wide {
+        min-width: 250px;
+      }
+      #reserve {
+        background: var(--warm-beige);
+      }
+      .reserve-form {
+        max-width: 600px;
+        width: 100%;
+        margin: 0 auto;
+        background: var(--white);
+        padding: clamp(20px, 5vw, 40px);
+        border-radius: 20px;
+        text-align: left;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-label {
+        font-size: 0.85rem;
+        font-weight: bold;
+      }
+      .optional-label {
+        font-weight: normal;
+        color: var(--gray-muted);
+        font-size: 0.75rem;
+      }
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        font-size: 16px;
+      }
+      .contact-box {
+        background: var(--white);
+        width: 100%;
+        padding: 60px 20px;
+        border-top: 1px solid var(--pink-pastel);
+      }
+      .contact-grid {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        text-align: left;
+        gap: 40px;
+      }
+      .contact-side {
+        text-align: right;
+      }
+      .contact-text {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+      }
+      .contact-text:last-child {
+        margin-bottom: 0;
+      }
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 15px;
+      }
+      .social-links--end {
+        justify-content: flex-end;
+      }
+      .social-links a {
+        color: var(--pink-accent);
+        text-decoration: none;
+        font-size: 1.2rem;
+        border: 1px solid var(--pink-pastel);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+      }
+      .contact-hours {
+        font-size: 0.75rem;
+        margin-top: 15px;
+        color: var(--gray-muted);
+      }
+      footer {
+        background: var(--footer-bg);
+        color: var(--footer-text);
+        padding: 25px;
+        text-align: center;
+        font-size: 0.75rem;
+      }
+      @media (max-width: 900px) {
+        .blog-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .room-block,
+        .room-block:nth-child(even) {
+          flex-direction: column;
+          text-align: center;
+        }
+        .room-img,
+        .room-text {
+          width: 100%;
+        }
+        .calendar-card {
+          grid-template-columns: 1fr;
+        }
+        .details-box {
+          border-left: none;
+          border-top: 1px solid #eee;
+          padding-left: 0;
+          padding-top: 20px;
+        }
+        .room-info-grid,
+        .feature-list {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 600px) {
+        .blog-grid {
+          grid-template-columns: 1fr;
+        }
+        .contact-grid {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .contact-grid div:last-child {
+          text-align: center !important;
+        }
+        .social-links {
+          justify-content: center;
+        }
+        section {
+          padding: 60px 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="navbar">
+      <a href="#hero">ホーム</a>
+      <a href="#rooms">講座内容</a>
+      <a href="#plans">スケジュール</a>
+      <a href="#amenity">レンタルサロン</a>
+      <a href="#blog">ブログ</a>
+    </nav>
+
+    <section id="hero">
+      <div class="container">
+        <h1 class="script-title">セラピースタジオ</h1>
+        <p class="hero-subtitle">
+          女性セラピストのための技術＆接客クオリティ向上講座
+        </p>
+        <p class="hero-description">
+          初心者からトップランクへ –
+          お客様から選ばれ続けるセラピストになるための実践コース
+        </p>
+        <a href="#reserve" class="btn-pill btn-pink">今すぐ申し込む</a>
+      </div>
+    </section>
+
+    <section id="pain-points">
+      <div class="container">
+        <h2 class="script-title">このようなお悩みはありませんか？</h2>
+        <ul class="pain-list">
+          <li>
+            施術時間をフルに活かすための技術やバリエーションが不足している
+          </li>
+          <li>自身の専門的なスキルセットをさらに広げたい</li>
+          <li>サービスに魅力や心地よさを加える演出方法を学びたい</li>
+          <li>お客様のリピート率がなかなか上がらない</li>
+          <li>次回の予約や事前予約に繋げることが難しい</li>
+          <li>過度な要求をされるお客様への対応に困っている</li>
+          <li>お客様とのコミュニケーションに自信が持てない</li>
+        </ul>
+
+        <div class="icon-group-c">
+          <div class="icon-item">
+            <div class="icon-circle-c">✨</div>
+            <span class="icon-label">技術</span>
+          </div>
+          <div class="icon-item">
+            <div class="icon-circle-c">🌿</div>
+            <span class="icon-label">マインド</span>
+          </div>
+          <div class="icon-item">
+            <div class="icon-circle-c">💎</div>
+            <span class="icon-label">魅力</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rooms">
+      <div class="container">
+        <h2 class="script-title">講座一覧</h2>
+        <p class="section-eyebrow section-eyebrow--rooms">
+          講座ラインナップ
+        </p>
+
+        <div class="walkthrough edge-blur">
+          <div class="walkthrough-body">
+            <ul class="screens">
+              <li class="screen edge-blur">
+                <div class="screen-image screen-image--dry-care"></div>
+                <div class="screen-content">
+                  <h3>1. ドライケア</h3>
+                  <p>
+                    的確な圧の加え方、ストレッチの手技、そしてしっかりとストレスを解きほぐすヘッドマッサージに重点を置いた集中講座です。
+                  </p>
+                </div>
+              </li>
+              <li class="screen edge-blur">
+                <div class="screen-image screen-image--oil-massage"></div>
+                <div class="screen-content">
+                  <h3>2. オイルマッサージ</h3>
+                  <p>
+                    プロフェッショナルなオイル手技を学び、全身へのすべてのアプローチにおいて、途切れることのない滑らかなタッチを習得します。
+                  </p>
+                </div>
+              </li>
+              <li class="screen edge-blur">
+                <div class="screen-image screen-image--art-touch"></div>
+                <div class="screen-content">
+                  <h3>3. アート・オブ・タッチ</h3>
+                  <p>
+                    印象深い「ファーストタッチ」の方法、上品なサービスの魅せ方、精度を高めた空間演出（アンビエンス）を学びます。
+                  </p>
+                </div>
+              </li>
+              <li class="screen edge-blur">
+                <div class="screen-image screen-image--hospitality"></div>
+                <div class="screen-content">
+                  <h3>4. 接客スキル＆ホスピタリティ</h3>
+                  <p>
+                    20年の経験に基づき、独自のパーソナルスタイルを築き、男性客の心理を理解してリピート率を飛躍的に高めるテクニックです。
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="blog">
+      <div class="container">
+        <h2 class="script-title">ブログ</h2>
+        <p class="section-eyebrow">
+          体験 & 技術の共有
+        </p>
+
+        <div class="blog-container">
+          <div class="blog-card featured">
+            <div class="blog-image blog-image--mindfulness">
+              <span class="blog-tag">マインドフルネス</span>
+            </div>
+            <div class="blog-content">
+              <h3>朝5分間の瞑想で本来の自分を取り戻す方法</h3>
+              <p>
+                静かな空間で自分の呼吸と深くつながることから朝を始めることで、前向きなエネルギーを引き寄せるベースが整います...
+              </p>
+              <a
+                href="https://canva.link/blog-detail-v1"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="view-detail"
+                >詳細を見る
+                <i class="icon-angle-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="blog-card">
+            <div class="blog-image blog-image--interior">
+              <span class="blog-tag">インテリア</span>
+            </div>
+            <div class="blog-content">
+              <h3>ストレスを軽減する心地よい空間づくりのアート</h3>
+              <p>
+                淡い色調と素朴な風合いのアイテムを組み合わせることで、忙しい毎日の終わりに神経を優しく解きほぐすヒーリング効果が生まれます...
+              </p>
+              <a
+                href="https://canva.link/blog-detail-v1"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="view-detail"
+                >詳細を見る
+                <i class="icon-angle-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="blog-card">
+            <div class="blog-image blog-image--herbal-tea">
+              <span class="blog-tag">ハーブティー</span>
+            </div>
+            <div class="blog-content">
+              <h3>五感を呼び覚ますアロマとハーブティーの療法</h3>
+              <p>
+                ほのかに香るエッセンシャルオイルとともに温かいお茶をいただく時間は、繊細な心に究極の安らぎをもたらします...
+              </p>
+              <a
+                href="https://canva.link/blog-detail-v1"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="view-detail"
+                >詳細を見る
+                <i class="icon-angle-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="blog-footer">
+          <a
+            href="https://canva.link/blog-list-v1"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="view-more-pill"
+          >
+            <span>記事一覧を見る</span>
+            <i class="icon-angle-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="plans">
+      <div class="container">
+        <h2 class="script-title">開講プラン</h2>
+        <p class="section-eyebrow section-eyebrow--plans">
+          開講スケジュール 2025年6月
+        </p>
+
+        <div class="calendar-card">
+          <div class="calendar-wrapper">
+            <div class="calendar-grid">
+              <div class="day has-class selected">1</div>
+              <div class="day has-class">2</div>
+              <div class="day has-class">3</div>
+              <div class="day">4</div>
+              <div class="day has-class">5</div>
+              <div class="day has-class">6</div>
+              <div class="day has-class">7</div>
+              <div class="day has-class">8</div>
+              <div class="day has-class">9</div>
+              <div class="day has-class">10</div>
+              <div class="day">11</div>
+              <div class="day has-class">12</div>
+              <div class="day has-class">13</div>
+              <div class="day has-class">14</div>
+              <div class="day has-class">15</div>
+              <div class="day has-class">16</div>
+              <div class="day has-class">17</div>
+              <div class="day">18</div>
+              <div class="day has-class">19</div>
+              <div class="day has-class">20</div>
+              <div class="day has-class">21</div>
+              <div class="day has-class">22</div>
+              <div class="day has-class">23</div>
+              <div class="day has-class">24</div>
+              <div class="day">25</div>
+              <div class="day has-class">26</div>
+              <div class="day has-class">27</div>
+              <div class="day has-class">28</div>
+              <div class="day has-class">29</div>
+              <div class="day has-class">30</div>
+            </div>
+          </div>
+
+          <div class="details-box">
+            <h4 class="details-title">
+              レッスン詳細
+            </h4>
+            <div class="class-info-item">
+              <strong class="class-info-label"
+                >毎週月曜日 ＆ 木曜日</strong
+              >
+              <p class="class-info-time">10:00 ~ 12:00 — 基礎ドライケア</p>
+            </div>
+            <div class="class-info-item">
+              <strong class="class-info-label"
+                >毎週火曜日 ＆ 金曜日</strong
+              >
+              <p class="class-info-time">
+                13:00 ~ 15:00 — 全身オイルマッサージ
+              </p>
+            </div>
+            <div class="class-info-item">
+              <strong class="class-info-label"
+                >毎週土曜日</strong
+              >
+              <p class="class-info-time">
+                10:00 ~ 13:00 — 接客＆コミュニケーションスキル
+              </p>
+            </div>
+            <a
+              href="#reserve"
+              class="btn-pill btn-pink btn-full btn-with-top-margin"
+              >スケジュールを予約する</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="amenity">
+      <div class="container">
+        <h2 class="script-title">シェアサロン</h2>
+        <p class="section-eyebrow">
+          レンタルルーム（面貸し・シェアサロン）
+        </p>
+
+        <div class="amenity-box">
+          <div class="room-info-grid">
+            <div class="room-info-card">
+              <h4 class="room-card-title">
+                ルーム1：堺筋本町
+              </h4>
+              <p class="room-card-meta">
+                2024年1月 オープン
+              </p>
+            </div>
+            <div class="room-info-card">
+              <h4 class="room-card-title">
+                ルーム2：南堀江
+              </h4>
+              <p class="room-card-meta">
+                2024年5月 オープン
+              </p>
+            </div>
+          </div>
+
+          <div class="amenity-feature-group">
+            <h4 class="amenity-section-title">
+              特徴 ＆ メリット
+            </h4>
+            <ul class="feature-list">
+              <li>
+                <span class="feature-check">✔</span>
+                清潔で可愛らしく、プロフェッショナルな空間
+              </li>
+              <li>
+                <span class="feature-check">✔</span>
+                心地よくリラックスできるオリジナルの香り
+              </li>
+              <li>
+                <span class="feature-check">✔</span>
+                お客様の満足度およびリピート率の向上に貢献
+              </li>
+              <li>
+                <span class="feature-check">✔</span>
+                効果的な集客・顧客獲得を強力にサポート
+              </li>
+            </ul>
+          </div>
+
+          <div class="amenity-cta">
+            <p class="amenity-note">
+              * いつでも見学可能です。お気軽にお問い合わせください！
+            </p>
+            <a
+              href="#reserve"
+              class="btn-pill btn-pink btn-wide"
+              >見学を予約する</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reserve">
+      <div class="container">
+        <h2 class="script-title">ご予約・ご相談</h2>
+        <div class="reserve-form">
+          <div class="form-group">
+            <label class="form-label"
+              >LINE ID（必須）</label
+            >
+            <input type="text" placeholder="@yourid" />
+          </div>
+          <div class="form-group">
+            <label class="form-label"
+              >メールアドレス
+              <span class="optional-label"
+                >（任意）</span
+              ></label
+            >
+            <input type="email" placeholder="example@mail.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label"
+              >メッセージ</label
+            >
+            <textarea
+              rows="4"
+              placeholder="講座の受講、またはレンタルルームの見学・ご相談など、ご希望の内容をご記入ください。"
+            ></textarea>
+          </div>
+          <button class="btn-pill btn-pink btn-full">
+            LINEで相談・予約する
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div id="contact" class="contact-box">
+      <div class="contact-grid">
+        <div>
+          <h3 class="contact-title">
+            お問い合わせ情報
+          </h3>
+          <p class="contact-text">
+            <strong>住所:</strong> 大阪府 大阪市（堺筋本町 ＆ 南堀江）
+          </p>
+          <p class="contact-text">
+            <strong>メール:</strong> info@therapystudio.jp
+          </p>
+          <p class="contact-text">
+            <strong>LINE:</strong> @therapystudio
+          </p>
+          <p class="contact-text">
+            <strong>電話番号:</strong> 090-0000-0000
+          </p>
+        </div>
+        <div class="contact-side">
+          <h3 class="contact-title">
+            公式SNS
+          </h3>
+          <div class="social-links social-links--end">
+            <a href="#" title="X">𝕏</a>
+            <a href="#" title="Instagram">📷</a>
+          </div>
+          <p class="contact-hours">
+            営業時間: 月 〜 土, 9:00~18:00
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 セラピースタジオ. All rights reserved.</p>
+    </footer>
+
+    <script>
+      let lastScrollY = window.scrollY;
+      const nav = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > lastScrollY) nav.classList.add("nav-hidden");
+        else nav.classList.remove("nav-hidden");
+        lastScrollY = window.scrollY;
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const revealSections = document.querySelectorAll("section:not(#hero)");
+        setupBlogCardLinks();
+        const observerOptions = {
+          root: null,
+          rootMargin: "0px 0px -80px 0px",
+          threshold: 0.05,
+        };
+
+        const sectionObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("scroll-reveal-active");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          observerOptions,
+        );
+
+        revealSections.forEach((section) => {
+          sectionObserver.observe(section);
+        });
+      });
+
+      function clearCanvaImportantStyles() {
+        // Lấy tất cả phần tử có thuộc tính 'style' nội dòng trên trang
+        const allElements = document.querySelectorAll("[style]");
+
+        allElements.forEach((el) => {
+          let styleString = el.getAttribute("style");
+
+          // Nếu phát hiện có chữ !important trong chuỗi style inline
+          if (styleString && styleString.includes("!important")) {
+            // Dùng Regex xóa tất cả các chữ !important (không phân biệt hoa thường)
+            let cleanStyle = styleString.replace(/!important/gi, "");
+
+            // Cập nhật lại thuộc tính style sạch cho phần tử
+            el.setAttribute("style", cleanStyle);
+          }
+        });
+      }
+
+      function setupBlogCardLinks() {
+        document.querySelectorAll(".blog-card").forEach((card) => {
+          card.addEventListener("click", (event) => {
+            if (event.target.closest("a, button")) return;
+
+            const link = card.querySelector("a[href]");
+            if (link) {
+              window.open(link.href, "_blank", "noopener,noreferrer");
+            }
+          });
+        });
+      }
+
+      // Chạy ngay khi cây DOM được dựng xong để tránh hiện tượng giật màu (FOUC)
+      document.addEventListener("DOMContentLoaded", function () {
+        clearCanvaImportantStyles();
+
+        // Gọi lại hàm phân trang hiển thị blog cũ của bạn (nếu có)
+        if (typeof renderPagination === "function") {
+          renderPagination();
+        }
+      });
+    </script>
+    <a href="#reserve" class="fab-contact" title="お問い合わせ">
+      <i class="icon-envelope"></i>
+    </a>
+  </body>
+</html>
