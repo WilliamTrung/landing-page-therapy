@@ -317,6 +317,8 @@
       #rooms {
         padding: 80px 0;
         background-color: var(--white);
+        -webkit-mask-image: none;
+        mask-image: none;
       }
       #rooms .container {
         max-width: 1200px;
@@ -325,16 +327,22 @@
       }
       .walkthrough {
         width: 100%;
-        margin: 0 auto;
+        max-width: 860px;
+        margin: 42px auto 0;
         background: transparent;
         box-shadow: none;
         overflow: visible;
       }
       .walkthrough-body {
+        height: auto;
+      }
+      .screens {
         display: flex;
         flex-direction: column;
-        gap: 60px;
-        height: auto;
+        gap: 34px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
       }
       .screen {
         position: relative !important;
@@ -343,20 +351,28 @@
         opacity: 1 !important;
         visibility: visible !important;
         display: flex !important;
-        flex-direction: row;
+        flex-direction: column;
         width: 100%;
-        height: 450px;
-        background: var(--pink-pastel);
+        min-height: 50vh;
+        background: var(--white);
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(232, 152, 152, 0.1);
-        margin-bottom: 5%;
+        box-shadow: 0 16px 42px rgba(63, 47, 41, 0.1);
+        border: 1px solid rgba(201, 138, 104, 0.2);
+        border-radius: 26px;
+        color: inherit;
+        text-decoration: none;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
       }
-      .screen:nth-child(even) {
-        flex-direction: row-reverse;
+      .screen:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 22px 52px rgba(63, 47, 41, 0.14);
       }
       .screen-image {
-        flex: 1;
-        height: 100%;
+        width: 100%;
+        flex: 1 1 auto;
+        min-height: 0;
         background-size: cover;
         background-position: center;
       }
@@ -369,29 +385,22 @@
       .screen-image--art-touch {
         background-image: url("https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=800");
       }
-      .screen-image--hospitality {
-        background-image: url("https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=800");
-      }
       .screen-content {
-        flex: 1;
-        padding: 40px 10%;
+        min-height: 96px;
+        padding: 26px 28px 30px;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        align-items: center;
+        justify-content: flex-start;
         text-align: left;
-        background: var(--pink-light);
+        background: var(--white);
+        border-top: 1px solid rgba(201, 138, 104, 0.14);
         box-sizing: border-box;
       }
       .screen-content h3 {
         font-family: "Noto Serif JP", serif;
-        font-size: 1.8rem;
+        font-size: clamp(1.35rem, 2.6vw, 1.9rem);
         color: var(--pink-dark);
-        margin-bottom: 15px;
-      }
-      .screen-content p {
-        font-size: 1rem;
-        color: var(--text-mid);
-        line-height: 1.6;
+        margin-bottom: 0;
       }
       #blog {
         padding: 80px 0;
@@ -620,7 +629,6 @@
         padding-left: 20px;
       }
       .details-title,
-      .amenity-section-title,
       .contact-title {
         font-family: "Noto Serif JP", serif;
         color: var(--pink-accent);
@@ -639,77 +647,32 @@
       .btn-full {
         width: 100%;
       }
+      .contact-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .contact-actions .btn-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        font-weight: 700;
+      }
+      .btn-line {
+        background: #06c755;
+        color: var(--white);
+      }
+      .btn-line:hover {
+        background: #05a949;
+      }
+      @media (max-width: 520px) {
+        .contact-actions {
+          grid-template-columns: 1fr;
+        }
+      }
       .btn-with-top-margin {
         margin-top: 15px;
-      }
-      #amenity {
-        background-color: var(--white);
-      }
-      .amenity-box {
-        background: var(--pink-light);
-        border: 2px solid var(--pink-pastel);
-        border-radius: 24px;
-        padding: clamp(20px, 5vw, 50px);
-        max-width: 900px;
-        margin: 0 auto;
-        text-align: left;
-        box-shadow: 0 10px 25px rgba(232, 152, 152, 0.05);
-      }
-      .room-info-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 30px;
-        margin-bottom: 30px;
-      }
-      .room-info-card {
-        background: var(--white);
-        padding: 20px;
-        border-radius: 15px;
-        border-left: 4px solid var(--pink-accent);
-      }
-      .room-card-title {
-        font-family: "Noto Serif JP", serif;
-        color: var(--pink-dark);
-        margin-bottom: 5px;
-      }
-      .room-card-meta {
-        font-size: 0.85rem;
-        color: var(--text-mid);
-      }
-      .amenity-feature-group {
-        margin-bottom: 30px;
-      }
-      .amenity-section-title {
-        font-size: 1.3rem;
-      }
-      .feature-list {
-        list-style: none;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-      }
-      .feature-list li {
-        font-size: 0.9rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .feature-check {
-        color: var(--pink-accent);
-      }
-      .amenity-cta {
-        text-align: center;
-        border-top: 1px dashed var(--pink-accent);
-        padding-top: 30px;
-      }
-      .amenity-note {
-        font-size: 0.9rem;
-        color: var(--text-mid);
-        margin-bottom: 20px;
-        font-style: italic;
-      }
-      .btn-wide {
-        min-width: 250px;
       }
       #reserve {
         background: var(--warm-beige);
@@ -822,10 +785,6 @@
           padding-left: 0;
           padding-top: 20px;
         }
-        .room-info-grid,
-        .feature-list {
-          grid-template-columns: 1fr;
-        }
       }
       @media (max-width: 600px) {
         .blog-grid {
@@ -852,7 +811,6 @@
       <a href="#hero">ホーム</a>
       <a href="#rooms">講座内容</a>
       <a href="#plans">スケジュール</a>
-      <a href="#amenity">レンタルサロン</a>
       <a href="#blog">ブログ</a>
     </nav>
 
@@ -909,122 +867,35 @@
           講座ラインナップ
         </p>
 
-        <div class="walkthrough edge-blur">
+        <div class="walkthrough">
           <div class="walkthrough-body">
             <ul class="screens">
-              <li class="screen edge-blur">
-                <div class="screen-image screen-image--dry-care"></div>
-                <div class="screen-content">
-                  <h3>1. ドライケア</h3>
-                  <p>
-                    的確な圧の加え方、ストレッチの手技、そしてしっかりとストレスを解きほぐすヘッドマッサージに重点を置いた集中講座です。
-                  </p>
-                </div>
+              <li>
+                <a href="course_list.html" class="screen">
+                  <div class="screen-image screen-image--dry-care"></div>
+                  <div class="screen-content">
+                    <h3>1. ドライケア</h3>
+                  </div>
+                </a>
               </li>
-              <li class="screen edge-blur">
-                <div class="screen-image screen-image--oil-massage"></div>
-                <div class="screen-content">
-                  <h3>2. オイルマッサージ</h3>
-                  <p>
-                    プロフェッショナルなオイル手技を学び、全身へのすべてのアプローチにおいて、途切れることのない滑らかなタッチを習得します。
-                  </p>
-                </div>
+              <li>
+                <a href="course_list.html" class="screen">
+                  <div class="screen-image screen-image--oil-massage"></div>
+                  <div class="screen-content">
+                    <h3>2. オイルマッサージ</h3>
+                  </div>
+                </a>
               </li>
-              <li class="screen edge-blur">
-                <div class="screen-image screen-image--art-touch"></div>
-                <div class="screen-content">
-                  <h3>3. アート・オブ・タッチ</h3>
-                  <p>
-                    印象深い「ファーストタッチ」の方法、上品なサービスの魅せ方、精度を高めた空間演出（アンビエンス）を学びます。
-                  </p>
-                </div>
-              </li>
-              <li class="screen edge-blur">
-                <div class="screen-image screen-image--hospitality"></div>
-                <div class="screen-content">
-                  <h3>4. 接客スキル＆ホスピタリティ</h3>
-                  <p>
-                    20年の経験に基づき、独自のパーソナルスタイルを築き、男性客の心理を理解してリピート率を飛躍的に高めるテクニックです。
-                  </p>
-                </div>
+              <li>
+                <a href="course_list.html" class="screen">
+                  <div class="screen-image screen-image--art-touch"></div>
+                  <div class="screen-content">
+                    <h3>3. アート・オブ・タッチ</h3>
+                  </div>
+                </a>
               </li>
             </ul>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="blog">
-      <div class="container">
-        <h2 class="script-title">ブログ</h2>
-        <p class="section-eyebrow">
-          体験 & 技術の共有
-        </p>
-
-        <div class="blog-container">
-          <div class="blog-card featured">
-            <div class="blog-image blog-image--mindfulness">
-              <span class="blog-tag">マインドフルネス</span>
-            </div>
-            <div class="blog-content">
-              <h3>朝5分間の瞑想で本来の自分を取り戻す方法</h3>
-              <p>
-                静かな空間で自分の呼吸と深くつながることから朝を始めることで、前向きなエネルギーを引き寄せるベースが整います...
-              </p>
-              <a
-                href="blog_detail.html"
-                class="view-detail"
-                >詳細を見る
-                <i class="icon-angle-right"></i>
-              </a>
-            </div>
-          </div>
-
-          <div class="blog-card">
-            <div class="blog-image blog-image--interior">
-              <span class="blog-tag">インテリア</span>
-            </div>
-            <div class="blog-content">
-              <h3>ストレスを軽減する心地よい空間づくりのアート</h3>
-              <p>
-                淡い色調と素朴な風合いのアイテムを組み合わせることで、忙しい毎日の終わりに神経を優しく解きほぐすヒーリング効果が生まれます...
-              </p>
-              <a
-                href="blog_detail.html"
-                class="view-detail"
-                >詳細を見る
-                <i class="icon-angle-right"></i>
-              </a>
-            </div>
-          </div>
-
-          <div class="blog-card">
-            <div class="blog-image blog-image--herbal-tea">
-              <span class="blog-tag">ハーブティー</span>
-            </div>
-            <div class="blog-content">
-              <h3>五感を呼び覚ますアロマとハーブティーの療法</h3>
-              <p>
-                ほのかに香るエッセンシャルオイルとともに温かいお茶をいただく時間は、繊細な心に究極の安らぎをもたらします...
-              </p>
-              <a
-                href="blog_detail.html"
-                class="view-detail"
-                >詳細を見る
-                <i class="icon-angle-right"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="blog-footer">
-          <a
-            href="blog_list.html"
-            class="view-more-pill"
-          >
-            <span>記事一覧を見る</span>
-            <i class="icon-angle-right"></i>
-          </a>
         </div>
       </div>
     </section>
@@ -1108,71 +979,6 @@
       </div>
     </section>
 
-    <section id="amenity">
-      <div class="container">
-        <h2 class="script-title">シェアサロン</h2>
-        <p class="section-eyebrow">
-          レンタルルーム（面貸し・シェアサロン）
-        </p>
-
-        <div class="amenity-box">
-          <div class="room-info-grid">
-            <div class="room-info-card">
-              <h4 class="room-card-title">
-                ルーム1：堺筋本町
-              </h4>
-              <p class="room-card-meta">
-                2024年1月 オープン
-              </p>
-            </div>
-            <div class="room-info-card">
-              <h4 class="room-card-title">
-                ルーム2：南堀江
-              </h4>
-              <p class="room-card-meta">
-                2024年5月 オープン
-              </p>
-            </div>
-          </div>
-
-          <div class="amenity-feature-group">
-            <h4 class="amenity-section-title">
-              特徴 ＆ メリット
-            </h4>
-            <ul class="feature-list">
-              <li>
-                <span class="feature-check">✔</span>
-                清潔で可愛らしく、プロフェッショナルな空間
-              </li>
-              <li>
-                <span class="feature-check">✔</span>
-                心地よくリラックスできるオリジナルの香り
-              </li>
-              <li>
-                <span class="feature-check">✔</span>
-                お客様の満足度およびリピート率の向上に貢献
-              </li>
-              <li>
-                <span class="feature-check">✔</span>
-                効果的な集客・顧客獲得を強力にサポート
-              </li>
-            </ul>
-          </div>
-
-          <div class="amenity-cta">
-            <p class="amenity-note">
-              * いつでも見学可能です。お気軽にお問い合わせください！
-            </p>
-            <a
-              href="#reserve"
-              class="btn-pill btn-pink btn-wide"
-              >見学を予約する</a
-            >
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section id="reserve">
       <div class="container">
         <h2 class="script-title">ご予約・ご相談</h2>
@@ -1198,12 +1004,98 @@
             >
             <textarea
               rows="4"
-              placeholder="講座の受講、またはレンタルルームの見学・ご相談など、ご希望の内容をご記入ください。"
+              placeholder="講座の受講やご相談など、ご希望の内容をご記入ください。"
             ></textarea>
           </div>
-          <button class="btn-pill btn-pink btn-full">
-            LINEで相談・予約する
-          </button>
+          <div class="contact-actions">
+            <a
+              href="mailto:info@therapystudio.jp"
+              class="btn-pill btn-pink"
+              >Contact via Email</a
+            >
+            <a
+              href="https://line.me/R/ti/p/@therapystudio"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-pill btn-line"
+              >Contact via LINE</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="blog">
+      <div class="container">
+        <h2 class="script-title">ブログ</h2>
+        <p class="section-eyebrow">
+          体験 & 技術の共有
+        </p>
+
+        <div class="blog-container">
+          <div class="blog-card featured">
+            <div class="blog-image blog-image--mindfulness">
+              <span class="blog-tag">マインドフルネス</span>
+            </div>
+            <div class="blog-content">
+              <h3>朝5分間の瞑想で本来の自分を取り戻す方法</h3>
+              <p>
+                静かな空間で自分の呼吸と深くつながることから朝を始めることで、前向きなエネルギーを引き寄せるベースが整います...
+              </p>
+              <a
+                href="blog_detail.html"
+                class="view-detail"
+                >詳細を見る
+                <i class="icon-angle-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="blog-card">
+            <div class="blog-image blog-image--interior">
+              <span class="blog-tag">インテリア</span>
+            </div>
+            <div class="blog-content">
+              <h3>ストレスを軽減する心地よい空間づくりのアート</h3>
+              <p>
+                淡い色調と素朴な風合いのアイテムを組み合わせることで、忙しい毎日の終わりに神経を優しく解きほぐすヒーリング効果が生まれます...
+              </p>
+              <a
+                href="blog_detail.html"
+                class="view-detail"
+                >詳細を見る
+                <i class="icon-angle-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="blog-card">
+            <div class="blog-image blog-image--herbal-tea">
+              <span class="blog-tag">ハーブティー</span>
+            </div>
+            <div class="blog-content">
+              <h3>五感を呼び覚ますアロマとハーブティーの療法</h3>
+              <p>
+                ほのかに香るエッセンシャルオイルとともに温かいお茶をいただく時間は、繊細な心に究極の安らぎをもたらします...
+              </p>
+              <a
+                href="blog_detail.html"
+                class="view-detail"
+                >詳細を見る
+                <i class="icon-angle-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="blog-footer">
+          <a
+            href="blog_list.html"
+            class="view-more-pill"
+          >
+            <span>記事一覧を見る</span>
+            <i class="icon-angle-right"></i>
+          </a>
         </div>
       </div>
     </section>
@@ -1248,11 +1140,17 @@
 
     <script>
       let lastScrollY = window.scrollY;
-      const nav = document.getElementById("navbar");
       window.addEventListener("scroll", () => {
-        if (window.scrollY > lastScrollY) nav.classList.add("nav-hidden");
-        else nav.classList.remove("nav-hidden");
-        lastScrollY = window.scrollY;
+        const nav = document.getElementById("navbar");
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY > lastScrollY && currentScrollY > 50) {
+          nav.classList.add("nav-hidden");
+        } else {
+          nav.classList.remove("nav-hidden");
+        }
+
+        lastScrollY = currentScrollY;
       });
 
       document.addEventListener("DOMContentLoaded", function () {

@@ -29,7 +29,6 @@
         --footer-bg: #2a211d;
         --footer-text: #b9a092;
         --gray-muted: #9c8b82;
-        --active-tab-index: 0;
       }
 
       * {
@@ -210,95 +209,18 @@
         }
       }
 
-      /* --- TABS --- */
-      .tabs-container {
-        margin: 60px;
-        position: relative;
-        margin-bottom: 40px;
-        border-bottom: none; /* Bỏ đường kẻ gạch chân thô cứng cũ */
-        background-color: rgba(
-          255,
-          240,
-          240,
-          0.6
-        ); /* Nền đệm hồng siêu nhạt cho cụm tab */
-        padding: 8px;
-        border-radius: 50px;
-        max-width: fit-content;
-        margin-left: auto;
-        margin-right: auto; /* Căn giữa toàn bộ cụm tab */
-        border: 1px solid rgba(232, 152, 152, 0.2);
-      }
-
-      .tabs-header {
-        display: flex;
-        gap: 10px; /* Thu hẹp khoảng cách để khớp vào khung viên thuốc */
-        justify-content: center;
-      }
-
-      .tab-btn {
-        background: none;
-        border: none;
-        padding: 10px 24px;
-        font-size: 0.95rem;
-        color: var(--text-mid) !important;
-        cursor: pointer;
-        position: relative;
-        font-weight: 500;
-        border-radius: 40px; /* Mỗi nút là một hình oval mềm mại */
-        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-      }
-
-      /* Loại bỏ gạch chân kiểu cũ của tab active */
-      .tab-btn.active::after {
-        display: none;
-      }
-
-      /* Hiệu ứng nổi bật khi Tab được nhấn chọn (Active) */
-      .tab-btn.active {
-        color: var(--pink-pastel) !important;
-        background-color: var(
-          --pink-accent
-        ) !important; /* Đổi sang nền hồng nhấn */
-        font-weight: 700;
-        box-shadow: 0 4px 12px rgba(232, 152, 152, 0.35); /* Đổ bóng sắc hồng mịn */
-      }
-
-      /* Hiệu ứng mượt mà khi di chuột qua các tab chưa active */
-      .tab-btn:not(.active):hover {
-        color: var(--pink-dark) !important;
-        background-color: rgba(255, 255, 255, 0.8) !important;
-      }
-      .tabs-wrapper {
-        overflow: visible;
-        width: 100%;
-      }
-      .tabs-track {
-        display: flex;
-        width: 200%;
-        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        transform: translateX(calc(-50% * var(--active-tab-index)));
-      }
-      .tab-pane {
-        width: 100%;
-        flex-shrink: 0;
-        overflow: visible;
-      }
-      /* Logic ẩn/hiện bài viết qua Class bằng JS */
-      .tab-pane .blog-card {
+      .blog-grid .blog-card {
         display: none;
         opacity: 0;
         transform: scale(1);
       }
 
-      /* Trạng thái khi ĐƯỢC HIỆN */
-      .tab-pane .blog-card.is-visible {
-        display: flex; /* Trả lại layout gốc của card */
+      .blog-grid .blog-card.is-visible {
+        display: flex;
         animation: slideUpFadeIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)
           forwards;
       }
 
-      /* Định nghĩa hiệu ứng trượt nhẹ từ dưới lên và mờ dần (Fade In) */
       @keyframes slideUpFadeIn {
         from {
           opacity: 0;
@@ -518,20 +440,7 @@
     </header>
 
     <main class="container">
-      <div class="tabs-container">
-        <div class="tabs-header">
-          <button class="tab-btn active" onclick="switchTab(event, 0)">
-            最新の投稿
-          </button>
-          <button class="tab-btn" onclick="switchTab(event, 1)">
-            リラクゼーション空間
-          </button>
-        </div>
-      </div>
-
-      <div class="tabs-wrapper">
-        <div class="tab-pane">
-          <div class="blog-grid">
+      <div class="blog-grid">
             <div class="blog-card">
               <img
                 src="https://pub-9ea6b849552c41abaf1968e4d4ad3ee7.r2.dev/images/room_1.jpg"
@@ -850,8 +759,6 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
       </div>
       <div class="load-more-container">
         <button
@@ -910,68 +817,35 @@
 
     <script>
       const ITEMS_PER_PAGE = 6;
-      let currentActiveTabIndex = 0;
-      let tabVisibleCounts = ITEMS_PER_PAGE;
+      let visibleBlogCount = ITEMS_PER_PAGE;
 
       function renderPagination() {
-        const cards = document.querySelectorAll(".tab-pane .blog-card");
+        const cards = document.querySelectorAll(".blog-grid .blog-card");
         let matchedCount = 0;
 
         cards.forEach((card) => {
           matchedCount++;
 
-          if (matchedCount <= tabVisibleCounts) {
-            // Thêm class để kích hoạt hiệu ứng hiển thị trượt lên và mờ dần
+          if (matchedCount <= visibleBlogCount) {
             card.classList.add("is-visible");
           } else {
-            // Xóa class để kích hoạt hiệu ứng thu nhỏ và biến mất mượt mà
             card.classList.remove("is-visible");
           }
         });
 
-        // Điều khiển ẩn/hiện nút "Xem thêm" (もっと見る)
         const loadMoreBtn = document.getElementById("loadMoreBtn");
-        if (cards.length > tabVisibleCounts) {
+        if (cards.length > visibleBlogCount) {
           loadMoreBtn.style.display = "inline-flex";
         } else {
           loadMoreBtn.style.display = "none";
         }
       }
 
-      // Xử lý khi người dùng nhấn nút "Xem thêm" (もっと見る)
       function loadMoreArticles() {
-        // Tăng số lượng hiển thị thêm 6 bài
-        tabVisibleCounts += ITEMS_PER_PAGE;
-        // Cập nhật lại giao diện hiển thị
+        visibleBlogCount += ITEMS_PER_PAGE;
         renderPagination();
       }
 
-      // Xử lý chuyển đổi Tab và RESET trạng thái lúc mới load
-      function switchTab(event, tabIndex) {
-        currentActiveTabIndex = tabIndex;
-
-        // 1. Lấy tất cả các bài viết đang hiển thị trên màn hình
-        const cards = document.querySelectorAll(".tab-pane .blog-card");
-
-        // 2. BIẾN MẤT: Đồng loạt xóa class 'is-visible' để kích hoạt transition ẩn đi
-        cards.forEach((card) => {
-          card.classList.remove("is-visible");
-        });
-
-        // Cập nhật class active cho nút bấm UI ngay lập tức
-        const tabButtons = document.querySelectorAll(".tab-btn");
-        tabButtons.forEach((btn) => btn.classList.remove("active"));
-        event.currentTarget.classList.add("active");
-
-        // 3. XUẤT HIỆN LẠI: Chờ 300ms cho hiệu ứng ẩn chạy xong rồi mới kích hoạt hiện lại
-        setTimeout(() => {
-          // RESET lại số lượng hiển thị về 6 bài ban đầu
-          tabVisibleCounts = ITEMS_PER_PAGE;
-          renderPagination();
-        }, 100); // 300ms là thời gian chờ lý tưởng để tạo nhịp nghỉ cho mắt
-      }
-
-      // Tự động kích hoạt khi trang load xong
       document.addEventListener("DOMContentLoaded", function () {
         renderPagination();
         setupBlogCardLinks();

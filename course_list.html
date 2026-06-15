@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>セラピースタジオ - 講座一覧</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&family=Dancing+Script:wght@600&family=Lato:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --pink-light: #fff7f0;
+        --pink-pastel: #f3dfd2;
+        --pink-accent: #c98a68;
+        --pink-dark: #9f634b;
+        --warm-beige: #ead6c2;
+        --text-dark: #3f2f29;
+        --text-mid: #7a5d52;
+        --white: #fffdf9;
+        --footer-bg: #2a211d;
+        --footer-text: #b9a092;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Lato", "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(180deg, var(--white), var(--pink-light));
+        color: var(--text-dark);
+        line-height: 1.7;
+      }
+
+      .container {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 700;
+      }
+
+      .brand-logo {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.8rem;
+        color: var(--pink-dark);
+        text-decoration: none;
+      }
+
+      header {
+        position: sticky;
+        top: 15px;
+        z-index: 100;
+        max-width: 1120px;
+        margin: 0 auto;
+        background-color: rgba(234, 214, 194, 0.92);
+        border-bottom: 1px solid rgba(201, 138, 104, 0.28);
+        border-radius: 100px;
+        box-shadow: 0 6px 24px rgba(63, 47, 41, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition:
+          transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+          top 0.4s ease;
+      }
+
+      header.nav-hidden {
+        transform: translateY(-100px);
+      }
+
+      .header-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 30px;
+      }
+
+      .back-link {
+        color: var(--pink-dark);
+        font-weight: 700;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .hero {
+        padding: 90px 20px 50px;
+        text-align: center;
+      }
+
+      .hero h1 {
+        color: var(--pink-dark);
+        font-size: clamp(2.4rem, 7vw, 4.5rem);
+        line-height: 1;
+        margin-bottom: 16px;
+      }
+
+      .hero p {
+        max-width: 680px;
+        margin: 0 auto;
+        color: var(--text-mid);
+      }
+
+      .course-list {
+        display: grid;
+        gap: 28px;
+        padding: 30px 20px 90px;
+      }
+
+      .course-card {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        background: var(--white);
+        border: 1px solid rgba(201, 138, 104, 0.22);
+        border-radius: 28px;
+        box-shadow: 0 14px 38px rgba(63, 47, 41, 0.1);
+        position: relative;
+        transition: transform 0.3s ease;
+      }
+
+      .course-card:hover {
+        transform: scale(1.025);
+        z-index: 2;
+      }
+
+      .course-image {
+        min-height: clamp(300px, 42vw, 460px);
+        background-position: center;
+        background-size: cover;
+      }
+
+      .course-image--dry-care {
+        background-image: url("https://thaiodyssey.co.in/assets/img/blog/thai-dry-massage-the-secret-to-ultimate-relaxation.webp");
+      }
+
+      .course-image--oil-massage {
+        background-image: url("https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?q=80&w=800");
+      }
+
+      .course-image--art-touch {
+        background-image: url("https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=800");
+      }
+
+      .course-content {
+        padding: 36px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .course-content h2 {
+        color: var(--pink-dark);
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        margin-bottom: 12px;
+      }
+
+      .course-content p {
+        color: var(--text-mid);
+        margin-bottom: 20px;
+      }
+
+      .course-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .course-meta span {
+        background: var(--pink-light);
+        border: 1px solid var(--pink-pastel);
+        border-radius: 999px;
+        color: var(--pink-dark);
+        font-size: 0.85rem;
+        font-weight: 700;
+        padding: 6px 12px;
+      }
+
+      footer {
+        background: var(--footer-bg);
+        color: var(--footer-text);
+        padding: 25px;
+        text-align: center;
+        font-size: 0.75rem;
+      }
+
+      @media (max-width: 760px) {
+        header {
+          top: 8px;
+          width: calc(100% - 16px);
+        }
+
+        .header-wrapper {
+          gap: 10px;
+          padding: 8px 12px;
+        }
+
+        .brand-logo {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: clamp(1rem, 4vw, 1.5rem);
+        }
+
+        .back-link {
+          font-size: 0.85rem;
+        }
+
+        .course-card {
+          min-height: 75vh;
+        }
+
+        .course-list {
+          padding-right: 16px;
+          padding-left: 16px;
+        }
+
+        .course-image {
+          flex: 1 1 auto;
+          min-height: 0;
+        }
+
+        .course-content {
+          padding: 28px 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container header-wrapper">
+        <a href="landing_page.html" class="brand-logo">セラピースタジオ</a>
+        <a href="landing_page.html#rooms" class="back-link">
+          <i class="fa-solid fa-arrow-left"></i> 戻る
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <h1>講座一覧</h1>
+          <p>
+            女性セラピストのための技術、空間づくり、接客品質を磨く集中講座です。
+          </p>
+        </div>
+      </section>
+
+      <section class="container course-list">
+        <article class="course-card">
+          <div class="course-image course-image--dry-care"></div>
+          <div class="course-content">
+            <h2>ドライケア</h2>
+            <p>
+              的確な圧の加え方、ストレッチの手技、そしてしっかりとストレスを解きほぐすヘッドマッサージに重点を置いた集中講座です。
+            </p>
+            <div class="course-meta">
+              <span>基礎技術</span>
+              <span>ヘッドケア</span>
+              <span>初心者対応</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-image course-image--oil-massage"></div>
+          <div class="course-content">
+            <h2>オイルマッサージ</h2>
+            <p>
+              プロフェッショナルなオイル手技を学び、全身へのすべてのアプローチにおいて、途切れることのない滑らかなタッチを習得します。
+            </p>
+            <div class="course-meta">
+              <span>全身施術</span>
+              <span>オイル技術</span>
+              <span>中級者向け</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-image course-image--art-touch"></div>
+          <div class="course-content">
+            <h2>アート・オブ・タッチ</h2>
+            <p>
+              印象深い「ファーストタッチ」の方法、上品なサービスの魅せ方、精度を高めた空間演出を学びます。
+            </p>
+            <div class="course-meta">
+              <span>接客品質</span>
+              <span>空間演出</span>
+              <span>上級表現</span>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2026 セラピースタジオ. All rights reserved.</p>
+    </footer>
+    <script>
+      let lastScrollY = window.scrollY;
+
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector("header");
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY > lastScrollY && currentScrollY > 50) {
+          header.classList.add("nav-hidden");
+        } else {
+          header.classList.remove("nav-hidden");
+        }
+
+        lastScrollY = currentScrollY;
+      });
+    </script>
+  </body>
+</html>
